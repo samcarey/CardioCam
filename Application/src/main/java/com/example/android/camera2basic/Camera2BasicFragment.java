@@ -56,6 +56,10 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.opencv.core.*;
@@ -174,6 +178,8 @@ public class Camera2BasicFragment extends Fragment
      */
     private Size mPreviewSize;
 
+
+
     /**
      * {@link CameraDevice.StateCallback} is called when {@link CameraDevice} changes its state.
      */
@@ -227,6 +233,11 @@ public class Camera2BasicFragment extends Fragment
      */
     private File mFile;
 
+    //Sam Carey
+    private TextView mTextView;
+    private String[] mDisplayData;
+    String displayText;
+
     /**
      * This a callback object for the {@link ImageReader}. "onImageAvailable" will be called when a
      * still image is ready to be saved.
@@ -238,25 +249,27 @@ public class Camera2BasicFragment extends Fragment
         public void onImageAvailable(ImageReader reader) {
 
             //Sam Carey wuz hear
-
             Image image = reader.acquireLatestImage();
             if (image != null) {
                 //mBackgroundHandler.post(new ImageSaver(image, mFile));
-                ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-                byte[] bytes = new byte[buffer.remaining()];
-                buffer.get(bytes);
 
-                Mat mat = new Mat(image.getHeight()+image.getHeight()/2, image.getWidth(), CvType.CV_8UC1);
-                mat.put(0, 0, bytes);
-                Mat rgb = new Mat(image.getHeight(), image.getWidth(), CvType.CV_8UC4);
-                //Imgproc.cvtColor(mat, rgb, Imgproc.COLOR_YUV420sp2BGR, 4);
+                displayText = analyze(image);
 
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // This code will always run on the UI thread, therefore is safe to modify UI elements.
+                        mTextView.setText(displayText);
+                    }
+                });
                 image.close();
             }
 
         }
 
     };
+
+
 
     /**
      * {@link CaptureRequest.Builder} for the camera preview
@@ -412,7 +425,10 @@ public class Camera2BasicFragment extends Fragment
         view.findViewById(R.id.picture).setOnClickListener(this);
         view.findViewById(R.id.info).setOnClickListener(this);
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
+        mTextView = (TextView) view.findViewById(R.id.textView);
     }
+
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -952,6 +968,27 @@ public class Camera2BasicFragment extends Fragment
                             })
                     .create();
         }
+    }
+
+
+
+
+
+    private String analyze(Image image){
+        String printout;
+        ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+        byte[] bytes = new byte[buffer.remaining()];
+        buffer.get(bytes);
+
+        Mat mat = new Mat(image.getHeight()+image.getHeight()/2, image.getWidth(), CvType.CV_8UC1);
+        mat.put(0, 0, bytes);
+        Mat rgb = new Mat(image.getHeight(), image.getWidth(), CvType.CV_8UC4);
+        //Imgproc.cvtColor(mat, rgb, Imgproc.COLOR_YUV420sp2BGR, 4);
+        Integer dims = rgb.dims();
+
+        printout = Integer.toString(dims);
+
+        return printout;
     }
 
 }
