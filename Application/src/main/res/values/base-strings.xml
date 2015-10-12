@@ -21,8 +21,10 @@
         <![CDATA[
         
             
-            This sample demonstrates the basic use of Camera2 API. Check the source code to see how
-            you can display camera preview and take pictures.
+            This application monitors heart rate by monitoring and amplifying tiny flucuations in
+            skin color due to skin capillaries expanding and relaxing. Point at a face, hold still, and wait.
+
+            Based on MIT video magnification project.
             
         
         ]]>

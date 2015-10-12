@@ -2,130 +2,130 @@
 <items version="2" >
 
     <item
-        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco/javacv/1.0/34aecdc27d00c73294eef65e9f078d8db35ef1/javacv-1.0.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="0034aecdc27d00c73294eef65e9f078d8db35ef1">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/javacv-1.0-89bbd4987fbe56433d23a738b0db5f48ee050d5d.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/jars/libs/internal_impl-23.0.0.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="8bd336eeae661e8311330284897ee07f8ebaa297">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/internal_impl-23.0.0-6050a2367b40ea3f32b79476f6258089dae1bc2f.jar" />
-    </item>
-    <item
         jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/opencv/3.0.0-1.0/96b9521df0d812f431a25edbdc4d5316c1b1e00/opencv-3.0.0-1.0.jar"
         jumboMode="false"
-        revision="23.0.0"
+        revision="23.0.1"
         sha1="096b9521df0d812f431a25edbdc4d5316c1b1e00">
         <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/opencv-3.0.0-1.0-f910c9644beab0f445d2ff931c880f2224c9081b.jar" />
     </item>
     <item
-        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="4fcf0b1879f8caf497c073e1432d398e9e2988c1">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-27e3d3c1f8d422f665bd2b820f57da230b6925e9.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/libfreenect/0.5.2-1.0/f0206735d3a4a44e4df4dc2f4006d638a9c15a01/libfreenect-0.5.2-1.0.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="f0206735d3a4a44e4df4dc2f4006d638a9c15a01">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/libfreenect-0.5.2-1.0-72d0866cce45fa551b214ab65e00a32bb351ea43.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco/javacpp/1.0/3bb28b42811adc255ce5ce56338f7c1c002c0a17/javacpp-1.0.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="3bb28b42811adc255ce5ce56338f7c1c002c0a17">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/javacpp-1.0-3fa6b15449726c9e2bd637500cc7af053f1059e7.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/Camera2Basic.libraries/opencv/unspecified/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="e4b41abef4f5cf3f52903784d09d3829be13acde">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-eca31bc8cd1c56257a38675f5fab9e51d5aae2bd.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/support-v13/23.0.0/jars/libs/internal_impl-23.0.0.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="5d4bccb885c8a89d066ecb6c4addb553a99a79a2">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/internal_impl-23.0.0-4a640bc2a1ae7f56af614dbd4ff703f7ba2672bf.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/flycapture/2.7.3.19-1.0/a8aec13c5ff93cfb5f4848916acf7cf4e926509b/flycapture-2.7.3.19-1.0.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="a8aec13c5ff93cfb5f4848916acf7cf4e926509b">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/flycapture-2.7.3.19-1.0-09bf6de36d13a8fd83e751e308ab155c88baceb6.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="8413c27b45b7fe61dca4a98159f65e2cee215f5a">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-692ae75da377c36cb811a4d3b2277526aec07aaa.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/ffmpeg/2.7.1-1.0/64738c7c3de51e60dcd2426bf8f774c0f1d9a8b6/ffmpeg-2.7.1-1.0.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="64738c7c3de51e60dcd2426bf8f774c0f1d9a8b6">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/ffmpeg-2.7.1-1.0-5f862e16b32e0c8a50f48db500d6da2d71dcb52c.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.0/support-annotations-23.0.0.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="990e7f98a7bad86a40b1f0bcfeb039023afd0839">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/support-annotations-23.0.0-2440b6ea3b1a53ca6e85ffba6a654440db888664.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.0.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="1ccbc26be2c465c622a48310e8092241b01abe80">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-4ea4c876619ca5c61ec2aef933920cb3f6afc04e.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/artoolkitplus/2.3.1-1.0/e96d21b58baa6c17eaadf6a8e9bd89493ad8cb5/artoolkitplus-2.3.1-1.0.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="0e96d21b58baa6c17eaadf6a8e9bd89493ad8cb5">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/artoolkitplus-2.3.1-1.0-c9cf6015aa80a9bfebaf224ef98eb43bdd56e31c.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/videoinput/0.200-1.0/f61bec20a8eee696f45aba7cedeb66c819f57491/videoinput-0.200-1.0.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="f61bec20a8eee696f45aba7cedeb66c819f57491">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/videoinput-0.200-1.0-0ff5221caff0e503473085ee54f9fff13d2a0d7d.jar" />
-    </item>
-    <item
         jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/flandmark/1.07-1.0/700d52c21b96b0a0d2f27e198d2e9e8a8adc5a81/flandmark-1.07-1.0.jar"
         jumboMode="false"
-        revision="23.0.0"
+        revision="23.0.1"
         sha1="700d52c21b96b0a0d2f27e198d2e9e8a8adc5a81">
         <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/flandmark-1.07-1.0-8ff309924af66cea026ae54b597cafd2eaadd7a3.jar" />
     </item>
     <item
-        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/support-v13/23.0.0/jars/classes.jar"
+        jar="/Users/samcarey/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.0/support-annotations-23.0.0.jar"
         jumboMode="false"
-        revision="23.0.0"
-        sha1="bb0ac3f3ee2d71854501cc28e52cc84a20209b41">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-b46a9951dd0304efd4d7d73de67a24cc21423b69.jar" />
+        revision="23.0.1"
+        sha1="990e7f98a7bad86a40b1f0bcfeb039023afd0839">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/support-annotations-23.0.0-2440b6ea3b1a53ca6e85ffba6a654440db888664.jar" />
+    </item>
+    <item
+        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/support-v13/23.0.0/jars/libs/internal_impl-23.0.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5d4bccb885c8a89d066ecb6c4addb553a99a79a2">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/internal_impl-23.0.0-4a640bc2a1ae7f56af614dbd4ff703f7ba2672bf.jar" />
+    </item>
+    <item
+        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/jars/libs/internal_impl-23.0.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8bd336eeae661e8311330284897ee07f8ebaa297">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/internal_impl-23.0.0-6050a2367b40ea3f32b79476f6258089dae1bc2f.jar" />
+    </item>
+    <item
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco/javacpp/1.0/3bb28b42811adc255ce5ce56338f7c1c002c0a17/javacpp-1.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="3bb28b42811adc255ce5ce56338f7c1c002c0a17">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/javacpp-1.0-3fa6b15449726c9e2bd637500cc7af053f1059e7.jar" />
+    </item>
+    <item
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/ffmpeg/2.7.1-1.0/64738c7c3de51e60dcd2426bf8f774c0f1d9a8b6/ffmpeg-2.7.1-1.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="64738c7c3de51e60dcd2426bf8f774c0f1d9a8b6">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/ffmpeg-2.7.1-1.0-5f862e16b32e0c8a50f48db500d6da2d71dcb52c.jar" />
+    </item>
+    <item
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco/javacv/1.0/34aecdc27d00c73294eef65e9f078d8db35ef1/javacv-1.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="0034aecdc27d00c73294eef65e9f078d8db35ef1">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/javacv-1.0-89bbd4987fbe56433d23a738b0db5f48ee050d5d.jar" />
+    </item>
+    <item
+        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8413c27b45b7fe61dca4a98159f65e2cee215f5a">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-692ae75da377c36cb811a4d3b2277526aec07aaa.jar" />
+    </item>
+    <item
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/libfreenect/0.5.2-1.0/f0206735d3a4a44e4df4dc2f4006d638a9c15a01/libfreenect-0.5.2-1.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="f0206735d3a4a44e4df4dc2f4006d638a9c15a01">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/libfreenect-0.5.2-1.0-72d0866cce45fa551b214ab65e00a32bb351ea43.jar" />
+    </item>
+    <item
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/flycapture/2.7.3.19-1.0/a8aec13c5ff93cfb5f4848916acf7cf4e926509b/flycapture-2.7.3.19-1.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a8aec13c5ff93cfb5f4848916acf7cf4e926509b">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/flycapture-2.7.3.19-1.0-09bf6de36d13a8fd83e751e308ab155c88baceb6.jar" />
+    </item>
+    <item
+        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1ccbc26be2c465c622a48310e8092241b01abe80">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-4ea4c876619ca5c61ec2aef933920cb3f6afc04e.jar" />
     </item>
     <item
         jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/libdc1394/2.2.3-1.0/ab4fb3621c29f8f8752624373837f1c32a6f5097/libdc1394-2.2.3-1.0.jar"
         jumboMode="false"
-        revision="23.0.0"
+        revision="23.0.1"
         sha1="ab4fb3621c29f8f8752624373837f1c32a6f5097">
         <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/libdc1394-2.2.3-1.0-83c606f92a17beeec2f29d0da8d5a325f601586c.jar" />
+    </item>
+    <item
+        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/Camera2Basic.libraries/opencv/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e4b41abef4f5cf3f52903784d09d3829be13acde">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-eca31bc8cd1c56257a38675f5fab9e51d5aae2bd.jar" />
+    </item>
+    <item
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/artoolkitplus/2.3.1-1.0/e96d21b58baa6c17eaadf6a8e9bd89493ad8cb5/artoolkitplus-2.3.1-1.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="0e96d21b58baa6c17eaadf6a8e9bd89493ad8cb5">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/artoolkitplus-2.3.1-1.0-c9cf6015aa80a9bfebaf224ef98eb43bdd56e31c.jar" />
+    </item>
+    <item
+        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4fcf0b1879f8caf497c073e1432d398e9e2988c1">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-27e3d3c1f8d422f665bd2b820f57da230b6925e9.jar" />
+    </item>
+    <item
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/videoinput/0.200-1.0/f61bec20a8eee696f45aba7cedeb66c819f57491/videoinput-0.200-1.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="f61bec20a8eee696f45aba7cedeb66c819f57491">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/videoinput-0.200-1.0-0ff5221caff0e503473085ee54f9fff13d2a0d7d.jar" />
+    </item>
+    <item
+        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/support-v13/23.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="bb0ac3f3ee2d71854501cc28e52cc84a20209b41">
+        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-b46a9951dd0304efd4d7d73de67a24cc21423b69.jar" />
     </item>
 
 </items>

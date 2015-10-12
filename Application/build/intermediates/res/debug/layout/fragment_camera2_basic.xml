@@ -13,53 +13,78 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.example.android.camera2basic.AutoFitTextureView
-        android:id="@+id/texture"
+        android:id="@+id/previewFrame"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_height="match_parent" />
 
-    <FrameLayout
-        android:id="@+id/control"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="112dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/control_background">
-
-        <Button
-            android:id="@+id/picture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/picture" />
-
-
-        <ImageButton
-            android:id="@+id/info"
-            android:contentDescription="@string/description_info"
-            style="@android:style/Widget.Material.Light.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|right"
-            android:padding="20dp"
-            android:src="@drawable/ic_action_info" />
-
-    </FrameLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView"
-        android:layout_above="@+id/control"
-        android:layout_centerHorizontal="true" />
+        android:layout_gravity="center_horizontal|bottom">
 
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bpm"
+                android:id="@+id/textView"
+                android:layout_gravity="center"
+                android:layout_centerInParent="true"
+                android:textColor="#00ff00"
+                android:textSize="20pt"
+                android:typeface="normal" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/info"
+                android:contentDescription="@string/description_info"
+                style="@android:style/Widget.Material.Light.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:padding="20dp"
+                android:src="@drawable/ic_action_info"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true" />
+
+            <Button
+                android:id="@+id/track"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/track"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:layout_alignParentTop="false"
+                android:layout_alignWithParentIfMissing="false" />
+
+            <ImageButton
+                style="@android:style/Widget.Material.Light.Button.Borderless"
+                android:id="@+id/switchCamera"
+                android:contentDescription="@string/description_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="20dp"
+                android:src="@android:drawable/ic_menu_rotate"
+                android:layout_centerVertical="true"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
 <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/layout/fragment_camera2_basic.xml -->

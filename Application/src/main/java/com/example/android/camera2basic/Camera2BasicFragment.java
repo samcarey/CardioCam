@@ -42,6 +42,7 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
+import android.media.ImageWriter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -62,14 +63,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.opencv.*;
+import org.opencv.core.Core;
 import org.opencv.core.*;
+import org.opencv.android.*;
 import org.opencv.imgproc.*;
+import org.opencv.imgcodecs.*;
+import org.opencv.videoio.*;
 
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.nio.ByteBuffer;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -235,8 +243,18 @@ public class Camera2BasicFragment extends Fragment
 
     //Sam Carey
     private TextView mTextView;
-    private String[] mDisplayData;
     String displayText;
+    //ImageWriter imageWriter; //Marshmallow
+    CardioCamProcessor ccProc;
+
+    /**
+     * Number of camera currently being used
+     */
+    private int mCameraNum;
+
+    public void print(String string){
+        Log.i(getActivity().toString(), "Debug856: " + string);
+    }
 
     /**
      * This a callback object for the {@link ImageReader}. "onImageAvailable" will be called when a
@@ -253,7 +271,7 @@ public class Camera2BasicFragment extends Fragment
             if (image != null) {
                 //mBackgroundHandler.post(new ImageSaver(image, mFile));
 
-                displayText = analyze(image);
+                displayText = ccProc.analyze(image);
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
@@ -422,13 +440,14 @@ public class Camera2BasicFragment extends Fragment
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-        view.findViewById(R.id.picture).setOnClickListener(this);
+        view.findViewById(R.id.track).setOnClickListener(this);
         view.findViewById(R.id.info).setOnClickListener(this);
-        mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
+        view.findViewById(R.id.switchCamera).setOnClickListener(this);
+        mTextureView = (AutoFitTextureView) view.findViewById(R.id.previewFrame);
         mTextView = (TextView) view.findViewById(R.id.textView);
+        ccProc = new CardioCamProcessor();
+        mCameraNum = 1;
     }
-
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -509,12 +528,29 @@ public class Camera2BasicFragment extends Fragment
 
                 // For still image captures, we use the largest available size.
                 Size largest = Collections.max(
-                        Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)),
+                        Arrays.asList(map.getOutputSizes(ImageFormat.YUV_420_888)),
                         new CompareSizesByArea());
                 mImageReader = ImageReader.newInstance(largest.getWidth(), largest.getHeight(),
-                        ImageFormat.JPEG, /*maxImages*/2);
+                        ImageFormat.YUV_420_888, /*maxImages*/10);
                 mImageReader.setOnImageAvailableListener(
                         mOnImageAvailableListener, mBackgroundHandler);
+
+
+                /* //Must wait for Marshmallow update :( ; Can also change format to RGB then.
+                //Sam Carey
+                SurfaceTexture texture = mTextureView.getSurfaceTexture();
+                assert texture != null;
+
+                // We configure the size of default buffer to be the size of camera preview we want.
+                texture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
+
+                // This is the output Surface we need to start preview.
+                Surface surface = new Surface(texture);
+                imageWriter = ImageWriter.newInstance(surface,2);
+                //Sam Carey
+                */
+
+
 
                 // Danger, W.R.! Attempting to use too large a preview size could  exceed the camera
                 // bus' bandwidth limitation, resulting in gorgeous previews but the storage of
@@ -532,7 +568,7 @@ public class Camera2BasicFragment extends Fragment
                             mPreviewSize.getHeight(), mPreviewSize.getWidth());
                 }
 
-                mCameraId = cameraId;
+                //mCameraId = cameraId;
                 return;
             }
         } catch (CameraAccessException e) {
@@ -549,16 +585,7 @@ public class Camera2BasicFragment extends Fragment
      * Opens the camera specified by {@link Camera2BasicFragment#mCameraId}.
      */
     private void openCamera(int width, int height) {
-        /*
-        if (ActivityCompat.checkSelfPermission(this.getgetContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (getActivity().checkSelfPermission(Manifest.permission.CAMERA)
-                    != PackageManager.PERMISSION_GRANTED) {
-                requestCameraPermission();
-                return;
-            }
-        }
-        */
+
         setUpCameraOutputs(width, height);
         configureTransform(width, height);
         Activity activity = getActivity();
@@ -567,7 +594,7 @@ public class Camera2BasicFragment extends Fragment
             if (!mCameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
                 throw new RuntimeException("Time out waiting to lock camera opening.");
             }
-            manager.openCamera(mCameraId, mStateCallback, mBackgroundHandler);
+            manager.openCamera(manager.getCameraIdList()[mCameraNum], mStateCallback, mBackgroundHandler);
         } catch (CameraAccessException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -640,10 +667,15 @@ public class Camera2BasicFragment extends Fragment
             // We set up a CaptureRequest.Builder with the output Surface.
             mPreviewRequestBuilder
                     = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+
+
+            //Sam Carey omission must wait for Marshmallow update :(
             mPreviewRequestBuilder.addTarget(surface);
+
 
             //Sam Carey's line :)
             mPreviewRequestBuilder.addTarget(mImageReader.getSurface());
+
 
             // Here, we create a CameraCaptureSession for camera preview.
             mCameraDevice.createCaptureSession(Arrays.asList(surface, mImageReader.getSurface()),
@@ -832,7 +864,7 @@ public class Camera2BasicFragment extends Fragment
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.picture: {
+            case R.id.track: {
                 takePicture();
                 break;
             }
@@ -843,6 +875,19 @@ public class Camera2BasicFragment extends Fragment
                             .setMessage(R.string.intro_message)
                             .setPositiveButton(android.R.string.ok, null)
                             .show();
+                }
+                break;
+            }
+            case R.id.switchCamera: {
+                Activity activity = getActivity();
+                if (null != activity) {
+                    if (mCameraNum == 0) {
+                        mCameraNum = 1;
+                    }else{
+                        mCameraNum = 0;
+                    }
+                    closeCamera();
+                    openCamera(mTextureView.getWidth(), mTextureView.getHeight());
                 }
                 break;
             }
@@ -968,27 +1013,6 @@ public class Camera2BasicFragment extends Fragment
                             })
                     .create();
         }
-    }
-
-
-
-
-
-    private String analyze(Image image){
-        String printout;
-        ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-        byte[] bytes = new byte[buffer.remaining()];
-        buffer.get(bytes);
-
-        Mat mat = new Mat(image.getHeight()+image.getHeight()/2, image.getWidth(), CvType.CV_8UC1);
-        mat.put(0, 0, bytes);
-        Mat rgb = new Mat(image.getHeight(), image.getWidth(), CvType.CV_8UC4);
-        //Imgproc.cvtColor(mat, rgb, Imgproc.COLOR_YUV420sp2BGR, 4);
-        Integer dims = rgb.dims();
-
-        printout = Integer.toString(dims);
-
-        return printout;
     }
 
 }

@@ -1741,7 +1741,6 @@ containing a value of this type.
         public static final int collapseActionView=0x7f0b001f;
         public static final int container=0x7f0b0050;
         public static final int contentPanel=0x7f0b0032;
-        public static final int control=0x7f0b0052;
         public static final int custom=0x7f0b0036;
         public static final int customPanel=0x7f0b0035;
         public static final int decor_content_parent=0x7f0b003f;
@@ -1758,7 +1757,7 @@ containing a value of this type.
         public static final int icon=0x7f0b002c;
         public static final int ifRoom=0x7f0b0020;
         public static final int image=0x7f0b0029;
-        public static final int info=0x7f0b0054;
+        public static final int info=0x7f0b0053;
         public static final int line1=0x7f0b005b;
         public static final int line3=0x7f0b005f;
         public static final int listMode=0x7f0b0009;
@@ -1770,7 +1769,7 @@ containing a value of this type.
         public static final int none=0x7f0b000e;
         public static final int normal=0x7f0b000a;
         public static final int parentPanel=0x7f0b002e;
-        public static final int picture=0x7f0b0053;
+        public static final int previewFrame=0x7f0b0051;
         public static final int progress_circular=0x7f0b0005;
         public static final int progress_horizontal=0x7f0b0006;
         public static final int radio=0x7f0b003b;
@@ -1797,16 +1796,17 @@ containing a value of this type.
         public static final int src_over=0x7f0b001a;
         public static final int status_bar_latest_event_content=0x7f0b0058;
         public static final int submit_area=0x7f0b004c;
+        public static final int switchCamera=0x7f0b0055;
         public static final int tabMode=0x7f0b000b;
         public static final int text=0x7f0b0060;
         public static final int text2=0x7f0b005e;
         public static final int textSpacerNoButtons=0x7f0b0034;
-        public static final int textView=0x7f0b0055;
-        public static final int texture=0x7f0b0051;
+        public static final int textView=0x7f0b0052;
         public static final int time=0x7f0b005c;
         public static final int title=0x7f0b002d;
         public static final int title_template=0x7f0b0030;
         public static final int topPanel=0x7f0b002f;
+        public static final int track=0x7f0b0054;
         public static final int up=0x7f0b0008;
         public static final int useLogo=0x7f0b0012;
         public static final int withText=0x7f0b0022;
@@ -1878,12 +1878,15 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with_application=0x7f05000f;
         public static final int abc_toolbar_collapse_description=0x7f050010;
         public static final int app_name=0x7f050012;
-        public static final int camera_error=0x7f050013;
-        public static final int description_info=0x7f050014;
-        public static final int intro_message=0x7f050015;
-        public static final int picture=0x7f050016;
-        public static final int request_permission=0x7f050017;
+        public static final int bpm=0x7f050013;
+        public static final int camera_error=0x7f050014;
+        public static final int description_info=0x7f050015;
+        public static final int intro_message=0x7f050016;
+        public static final int picture=0x7f050017;
+        public static final int request_permission=0x7f050018;
         public static final int status_bar_notification_info_overflow=0x7f050011;
+        public static final int stop=0x7f050019;
+        public static final int track=0x7f05001a;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f07007c;

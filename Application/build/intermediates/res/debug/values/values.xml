@@ -242,6 +242,7 @@
     <string name="app_name">Camera2Basic</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="bpm">75 BPM</string>
     <string name="camera_error">This device doesn\'t support Camera2 API.</string>
     <string name="description_info">Info</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/base-strings.xml -->
@@ -250,8 +251,10 @@
         <![CDATA[
         
             
-            This sample demonstrates the basic use of Camera2 API. Check the source code to see how
-            you can display camera preview and take pictures.
+            This application monitors heart rate by monitoring and amplifying tiny flucuations in
+            skin color due to skin capillaries expanding and relaxing. Point at a face, hold still, and wait.
+
+            Based on MIT video magnification project.
             
         
         ]]>
@@ -263,6 +266,12 @@
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.0/res/values/values.xml -->
     <eat-comment/>
     <string name="status_bar_notification_info_overflow">999+</string>
+    <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="stop">Stop</string>
+    <string name="track">Track</string>
+    <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.0/res/values/values.xml -->
+    <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
     <style name="Animation.AppCompat.Dialog" parent="Base.Animation.AppCompat.Dialog"/>
