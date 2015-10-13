@@ -69,13 +69,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.opencv.*;
-import org.opencv.core.Core;
 import org.opencv.core.*;
 import org.opencv.android.*;
-import org.opencv.imgproc.*;
-import org.opencv.imgcodecs.*;
-import org.opencv.videoio.*;
 
 
 import java.io.File;
@@ -279,22 +274,20 @@ public class Camera2BasicFragment extends Fragment
             if (image != null) {
                 //mBackgroundHandler.post(new ImageSaver(image, mFile));
 
-                Mat rgb = ccProc.image2RGB(image);
+                ccProc.addImage(image);
+                Mat rgb = ccProc.getRGB();
 
                 // convert to bitmap:
-                bm = Bitmap.createBitmap(rgb.cols(), rgb.rows(),Bitmap.Config.ARGB_8888);
+                bm = Bitmap.createBitmap(rgb.cols(), rgb.rows(), Bitmap.Config.ARGB_8888);
                 Utils.matToBitmap(rgb, bm);
 
 
-
-
-
-                //displayText = ccProc.getMeansRGB(image);
+                displayText = ccProc.getMeansRGB();
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         // This code will always run on the UI thread, therefore is safe to modify UI elements.
-                        //mTextView.setText(displayText);
+                        mTextView.setText(displayText);
                         mImageView.setImageBitmap(bm);
                     }
                 });
@@ -464,7 +457,6 @@ public class Camera2BasicFragment extends Fragment
         view.findViewById(R.id.switchCamera).setOnClickListener(this);
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.previewFrame);
         mTextView = (TextView) view.findViewById(R.id.textView);
-        ccProc = new CardioCamProcessor();
         mImageView = (ImageView) view.findViewById(R.id.imageView);
         mCameraNum = 1;
     }
@@ -689,12 +681,12 @@ public class Camera2BasicFragment extends Fragment
                     = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
 
             //Sam Carey omission must wait for Marshmallow update :(
-            mPreviewRequestBuilder.addTarget(surface);
+            //mPreviewRequestBuilder.addTarget(surface);
 
 
-            //Sam Carey's line :)
+            //Sam Carey :)
             mPreviewRequestBuilder.addTarget(mImageReader.getSurface());
-
+            ccProc = new CardioCamProcessor(mPreviewSize.getWidth(), mPreviewSize.getHeight());
 
             // Here, we create a CameraCaptureSession for camera preview.
             mCameraDevice.createCaptureSession(Arrays.asList(surface, mImageReader.getSurface()),

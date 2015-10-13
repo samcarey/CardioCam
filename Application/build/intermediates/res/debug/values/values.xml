@@ -245,6 +245,7 @@
     <string name="bpm">75 BPM</string>
     <string name="camera_error">This device doesn\'t support Camera2 API.</string>
     <string name="description_info">Info</string>
+    <string name="imageDescription">Processed Image</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/base-strings.xml -->
     <eat-comment/>
     <string name="intro_message">
