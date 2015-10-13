@@ -86,5 +86,11 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="243dp"
+        android:id="@+id/imageView"
+        android:layout_gravity="center" />
+
 </FrameLayout>
 <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/layout/fragment_camera2_basic.xml -->

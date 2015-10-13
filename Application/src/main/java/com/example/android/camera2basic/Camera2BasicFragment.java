@@ -30,8 +30,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
+import android.graphics.drawable.BitmapDrawable;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
@@ -48,6 +50,7 @@ import android.media.ImageWriter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentCompat;
 import android.support.v4.app.ActivityCompat;
@@ -61,6 +64,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -248,6 +252,8 @@ public class Camera2BasicFragment extends Fragment
     String displayText;
     //ImageWriter imageWriter; //Marshmallow
     CardioCamProcessor ccProc;
+    ImageView mImageView;
+    Bitmap bm;
 
     /**
      * Number of camera currently being used
@@ -273,13 +279,23 @@ public class Camera2BasicFragment extends Fragment
             if (image != null) {
                 //mBackgroundHandler.post(new ImageSaver(image, mFile));
 
+                Mat rgb = ccProc.image2RGB(image);
 
-                displayText = ccProc.analyze(image);
+                // convert to bitmap:
+                bm = Bitmap.createBitmap(rgb.cols(), rgb.rows(),Bitmap.Config.ARGB_8888);
+                Utils.matToBitmap(rgb, bm);
+
+
+
+
+
+                //displayText = ccProc.getMeansRGB(image);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         // This code will always run on the UI thread, therefore is safe to modify UI elements.
-                        mTextView.setText(displayText);
+                        //mTextView.setText(displayText);
+                        mImageView.setImageBitmap(bm);
                     }
                 });
 
@@ -449,6 +465,7 @@ public class Camera2BasicFragment extends Fragment
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.previewFrame);
         mTextView = (TextView) view.findViewById(R.id.textView);
         ccProc = new CardioCamProcessor();
+        mImageView = (ImageView) view.findViewById(R.id.imageView);
         mCameraNum = 1;
     }
 

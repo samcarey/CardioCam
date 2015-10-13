@@ -17,9 +17,12 @@ public class CardioCamProcessor {
         df = new DecimalFormat("###");
     }
 
-    public String analyze(Image image){
+    public Mat image2RGB(Image image){
+        return yuv2bgr(image2yuv(image));
+    }
 
-        Mat yuv = image2YUV(image);
+    public String getMeansRGB(Image image){
+        Mat yuv = image2yuv(image);
         Mat bgr = yuv2bgr(yuv);
         double[] means = Core.mean(bgr).val;
 
@@ -32,7 +35,7 @@ public class CardioCamProcessor {
         return bgr;
     }
 
-    private Mat image2YUV(Image image){
+    private Mat image2yuv(Image image){
         Image.Plane[] planes = image.getPlanes();
 
         byte[] imageData = new byte[image.getWidth() * image.getHeight()
