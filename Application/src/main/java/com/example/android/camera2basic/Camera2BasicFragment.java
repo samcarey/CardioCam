@@ -26,6 +26,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.RectF;
@@ -271,8 +273,8 @@ public class Camera2BasicFragment extends Fragment
             if (image != null) {
                 //mBackgroundHandler.post(new ImageSaver(image, mFile));
 
-                displayText = ccProc.analyze(image);
 
+                displayText = ccProc.analyze(image);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -280,6 +282,7 @@ public class Camera2BasicFragment extends Fragment
                         mTextView.setText(displayText);
                     }
                 });
+
                 image.close();
             }
 
@@ -667,7 +670,6 @@ public class Camera2BasicFragment extends Fragment
             // We set up a CaptureRequest.Builder with the output Surface.
             mPreviewRequestBuilder
                     = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-
 
             //Sam Carey omission must wait for Marshmallow update :(
             mPreviewRequestBuilder.addTarget(surface);

@@ -15,23 +15,37 @@ public class CardioCamProcessor {
 
     public CardioCamProcessor(){
         df = new DecimalFormat("###");
-        bgr = new Mat();
     }
 
     public String analyze(Image image){
-        planes = image.getPlanes();
 
-        imageData = new byte[image.getWidth() * image.getHeight()
+        Mat yuv = image2YUV(image);
+        Mat bgr = yuv2bgr(yuv);
+        double[] means = Core.mean(bgr).val;
+
+        return round(means[2]) + ", " + round(means[1]) + ", " + round(means[0]);
+    }
+
+    private Mat yuv2bgr(Mat yuv){
+        Mat bgr = new Mat();
+        Imgproc.cvtColor(yuv, bgr, Imgproc.COLOR_YUV420p2RGB);
+        return bgr;
+    }
+
+    private Mat image2YUV(Image image){
+        Image.Plane[] planes = image.getPlanes();
+
+        byte[] imageData = new byte[image.getWidth() * image.getHeight()
                 * ImageFormat.getBitsPerPixel(ImageFormat.YUV_420_888) / 8];
 
-        buffer = planes[0].getBuffer();
-        lastIndex = buffer.remaining();
+        ByteBuffer buffer = planes[0].getBuffer();
+        int lastIndex = buffer.remaining();
         buffer.get(imageData, 0, lastIndex);
-        pixelStride = planes[1].getPixelStride();
+        int pixelStride = planes[1].getPixelStride();
 
         for (int i = 1; i < 3; i++) {
             buffer = planes[i].getBuffer();
-            planeData = new byte[buffer.remaining()];
+            byte[] planeData = new byte[buffer.remaining()];
             buffer.get(planeData);
 
             for (int j = 0; j < planeData.length; j += pixelStride) {
@@ -39,25 +53,15 @@ public class CardioCamProcessor {
             }
         }
 
-        yuv = new Mat(image.getHeight() + image.getHeight() / 2,
+        Mat yuv = new Mat(image.getHeight() + image.getHeight() / 2,
                 image.getWidth(), CvType.CV_8UC1);
         yuv.put(0, 0, imageData);
-
-        Imgproc.cvtColor(yuv, bgr, Imgproc.COLOR_YUV420p2RGB);
-
-        double[] means = Core.mean(bgr).val;
-
-        return df.format(means[2]) + ", " + df.format(means[1]) + ", " + df.format(means[0]);
+        return yuv;
     }
 
+    private String round(double num){
+        return df.format(num);
+    }
 
-    ByteBuffer buffer;
-    byte[] imageData;
-    Image.Plane[] planes;
-    int pixelStride;
-    int lastIndex;
-    byte[] planeData;
     DecimalFormat df;
-    Mat bgr;
-    Mat yuv;
 }
