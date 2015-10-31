@@ -1,8 +1,10 @@
 package com.example.android.camera2basic;
 
+import android.graphics.Bitmap;
 import android.graphics.ImageFormat;
 import android.media.Image;
 
+import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -19,6 +21,7 @@ public class CardioCamProcessor {
         this.height = height;
         frameBuffer = new CcFrame[bufferSize];
         for (int i = 0 ; i < frameBuffer.length ; i++) frameBuffer[i] = new CcFrame();
+        dispRgb = new Mat(width, height, CvType.CV_8UC3); // swapped dimensions from rgb
     }
 
     public String getMeansRGB(){
@@ -73,27 +76,68 @@ public class CardioCamProcessor {
         }
     }
 
-    int index = 0;
-    int bufferSize = 10;
-    CcFrame[] frameBuffer;
-    DecimalFormat df = new DecimalFormat("###");
-    int width = 0;
-    int height = 0;
-    Mat temp = new Mat();
-
-    public Mat getRGB(){
-        Core.flip(frameBuffer[index].rgb.t(), temp, -1);
-        return temp;
+    public void img2bitmap(){
+        Core.flip(frameBuffer[index].rgb.t(), dispRgb, -1);
+        Utils.matToBitmap(dispRgb, frameBuffer[index].bm);
     }
+
+    public Bitmap getBitmap(){
+        return frameBuffer[index].bm;
+    }
+
+    /*
+    private Mat blurDn(Mat input, int levels){
+        Mat im = input.clone();
+        if (levels > 1){
+            im  = blurDn(im, levels - 1);
+        }
+
+
+
+        if (nlevs >= 1)
+            if (any(size(im)==1))
+                if (~any(size(filt)==1))
+                    error('Cant  apply 2D filter to 1D signal');
+        end
+        if (size(im,2)==1)
+            filt = filt(:);
+        else
+        filt = filt(:)';
+        end
+                res = corrDn(im,filt,'reflect1',(size(im)~=1)+1);
+        elseif (any(size(filt)==1))
+        filt = filt(:);
+        res = corrDn(im,filt,'reflect1',[2 1]);
+        res = corrDn(res,filt','reflect1',[1 2]);
+        else
+        res = corrDn(im,filt,'reflect1',[2 2]);
+        end
+        else
+        res = im;
+        end
+
+    }
+    */
 
     private class CcFrame{
 
         public CcFrame(){
             yuv = new Mat(height + height / 2, width, CvType.CV_8UC1);
             rgb = new Mat(height, width, CvType.CV_8UC3);
+            bm = Bitmap.createBitmap(height, width, Bitmap.Config.ARGB_8888); //swapped dimensions
         }
 
         public Mat yuv;
         public Mat rgb;
+        public Bitmap bm;
     }
+
+    int index = 0;
+    int bufferSize = 10;
+    CcFrame[] frameBuffer;
+    DecimalFormat df = new DecimalFormat("###");
+    int width = 0;
+    int height = 0;
+    Mat dispRgb;
+    int gBlurLevel = 6;
 }

@@ -274,12 +274,11 @@ public class Camera2BasicFragment extends Fragment
             if (image != null) {
                 //mBackgroundHandler.post(new ImageSaver(image, mFile));
 
-                ccProc.addImage(image);
-                Mat rgb = ccProc.getRGB();
 
-                // convert to bitmap:
-                bm = Bitmap.createBitmap(rgb.cols(), rgb.rows(), Bitmap.Config.ARGB_8888);
-                Utils.matToBitmap(rgb, bm);
+                ccProc.addImage(image);
+                ccProc.img2bitmap();
+                bm = ccProc.getBitmap();
+
 
 
                 displayText = ccProc.getMeansRGB();
