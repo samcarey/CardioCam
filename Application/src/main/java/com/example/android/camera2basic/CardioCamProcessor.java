@@ -8,11 +8,14 @@ import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Range;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.*;
 
 import java.nio.ByteBuffer;
 import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.List;
 
 public class CardioCamProcessor {
 
@@ -22,6 +25,7 @@ public class CardioCamProcessor {
         frameBuffer = new CcFrame[bufferSize];
         for (int i = 0 ; i < frameBuffer.length ; i++) frameBuffer[i] = new CcFrame();
         dispRgb = new Mat(width, height, CvType.CV_8UC3); // swapped dimensions from rgb
+        lowerHalf = new Mat(width, height, CvType.CV_8UC3); // swapped dimensions from rgb
     }
 
     public String getMeansRGB(){
@@ -78,46 +82,51 @@ public class CardioCamProcessor {
 
     public void img2bitmap(){
         Core.flip(frameBuffer[index].rgb.t(), dispRgb, -1);
+        Mat bottom = dispRgb.colRange(0, dispRgb.cols()).rowRange(0,dispRgb.rows()/2);
+        Mat bottom2 = blur(bottom, 5);
+        Mat concat = new Mat();
+        Mat zpad = Mat.zeros(bottom2.rows(), bottom.cols() - bottom2.cols(), CvType.CV_8UC3);
+        Core.hconcat(Arrays.asList(bottom2, zpad), concat);
+        //dispRgb = blur(dispRgb, 5);
+        concat.copyTo(bottom);
+        //Mat concat = new Mat();
+        //Mat zpad = Mat.zeros(1920,1080-1056, CvType.CV_8UC3);
+        //Core.hconcat(Arrays.asList(dispRgb, zpad), concat);
         Utils.matToBitmap(dispRgb, frameBuffer[index].bm);
+        //Utils.matToBitmap(dispRgb, frameBuffer[index].bm);
     }
 
     public Bitmap getBitmap(){
         return frameBuffer[index].bm;
     }
 
-    /*
-    private Mat blurDn(Mat input, int levels){
-        Mat im = input.clone();
-        if (levels > 1){
-            im  = blurDn(im, levels - 1);
-        }
-
-
-
-        if (nlevs >= 1)
-            if (any(size(im)==1))
-                if (~any(size(filt)==1))
-                    error('Cant  apply 2D filter to 1D signal');
-        end
-        if (size(im,2)==1)
-            filt = filt(:);
-        else
-        filt = filt(:)';
-        end
-                res = corrDn(im,filt,'reflect1',(size(im)~=1)+1);
-        elseif (any(size(filt)==1))
-        filt = filt(:);
-        res = corrDn(im,filt,'reflect1',[2 1]);
-        res = corrDn(res,filt','reflect1',[1 2]);
-        else
-        res = corrDn(im,filt,'reflect1',[2 2]);
-        end
-        else
-        res = im;
-        end
-
+    private Mat blur(Mat input, int nlevels){
+        return blurUp(blurDown(input,nlevels),nlevels);
     }
-    */
+
+    private Mat blurDown(Mat input , int nlevels){
+        Mat src;
+        if (nlevels > 1){
+            src = blurDown(input, nlevels-1);
+        }else{
+            src = input;
+        }
+        Mat dst = new Mat(src.rows() / 2, src.cols() / 2, CvType.CV_8UC3);
+        Imgproc.pyrDown(src,dst,dst.size());
+        return dst;
+    }
+
+    private Mat blurUp(Mat input , int nlevels){
+        Mat src;
+        if (nlevels > 1){
+            src = blurUp(input, nlevels - 1);
+        }else{
+            src = input.clone();
+        }
+        Mat dst = new Mat(src.rows() * 2, src.cols() * 2, CvType.CV_8UC3);
+        Imgproc.pyrUp(src, dst, dst.size());
+        return dst;
+    }
 
     private class CcFrame{
 
@@ -139,5 +148,7 @@ public class CardioCamProcessor {
     int width = 0;
     int height = 0;
     Mat dispRgb;
+    Mat lowerHalf;
     int gBlurLevel = 6;
+
 }
