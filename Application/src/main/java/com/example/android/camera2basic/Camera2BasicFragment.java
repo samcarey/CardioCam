@@ -276,7 +276,7 @@ public class Camera2BasicFragment extends Fragment
 
 
                 ccProc.addImage(image);
-                ccProc.img2bitmap();
+                //cProc.img2bitmap();
                 bm = ccProc.getBitmap();
 
 

@@ -8,64 +8,74 @@ import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.Range;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.*;
 
 import java.nio.ByteBuffer;
 import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 public class CardioCamProcessor {
 
-    public CardioCamProcessor(int width, int height){
-        this.width = width;
-        this.height = height;
-        frameBuffer = new CcFrame[bufferSize];
-        for (int i = 0 ; i < frameBuffer.length ; i++) frameBuffer[i] = new CcFrame();
-        dispRgb = new Mat(width, height, CvType.CV_8UC3); // swapped dimensions from rgb
-        lowerHalf = new Mat(width, height, CvType.CV_8UC3); // swapped dimensions from rgb
+    public CardioCamProcessor(int width, int height) {
+        this.tempYuv = new Mat(height + height / 2, width, CvType.CV_8UC1);
+        this.tempRgb = new Mat(height, width, CvType.CV_8UC3);
+        this.tempBm = Bitmap.createBitmap(height, width, Bitmap.Config.ARGB_8888); //swapped dims
+        this.width = Math.round(width / dimenRatio);
+        this.height = Math.round(height / dimenRatio);
+        this.frameBuffer = new CcFrame[bufferSize];
+        for (int i = 0; i < frameBuffer.length; i++) {
+            frameBuffer[i] = new CcFrame();
+        }
+        this.dispRgb = new Mat(width, height, CvType.CV_8UC3); // swapped dimensions from rgb
+        for (int level = 0; level <= gBlurLevels; level++) {
+            blurLevels.add(new Mat((int) Math.round(height / (Math.pow(2, level))),
+                    (int) Math.round(width / (Math.pow(2, level))), CvType.CV_8UC3));
+        }
+        imageData = new byte[width*height*ImageFormat.getBitsPerPixel(ImageFormat.YUV_420_888)/8];
     }
 
     public String getMeansRGB(){
-        double[] means = Core.mean(frameBuffer[index].rgb).val;
+        double[] means = new double[3];
+        double[] meansTemp;
+        for (int i = 0 ; i < bufferSize ; i++) {
+            meansTemp = Core.mean(frameBuffer[i].rgb).val;
+            means[0] += meansTemp[0];
+            means[1] += meansTemp[1];
+            means[2] += meansTemp[2];
+        }
+        means[0] /= bufferSize;
+        means[1] /= bufferSize;
+        means[2] /= bufferSize;
         return round(means[0]) + ", " + round(means[1]) + ", " + round(means[2]);
     }
 
-    private void yuv2rgb(int index){
-        //BGR and RGB conversions are backwards for some reason
-        Imgproc.cvtColor(frameBuffer[index].yuv, frameBuffer[index].rgb, Imgproc.COLOR_YUV420p2BGR);
-    }
+    private void image2mat(Image image, int index){
+        planes = image.getPlanes();
 
-    private void image2yuv(Image image, int index){
-        Image.Plane[] planes = image.getPlanes();
-
-        byte[] imageData = new byte[image.getWidth() * image.getHeight()
-                * ImageFormat.getBitsPerPixel(ImageFormat.YUV_420_888) / 8];
-
-        ByteBuffer buffer = planes[0].getBuffer();
-        int lastIndex = buffer.remaining();
-        buffer.get(imageData, 0, lastIndex);
+        byteBuffer = planes[0].getBuffer();
+        int lastIndex = byteBuffer.remaining();
+        byteBuffer.get(imageData, 0, lastIndex);
         int pixelStride = planes[1].getPixelStride();
 
         for (int i = 1; i < 3; i++) {
-            buffer = planes[i].getBuffer();
-            byte[] planeData = new byte[buffer.remaining()];
-            buffer.get(planeData);
+            byteBuffer = planes[i].getBuffer();
+            byte[] planeData = new byte[byteBuffer.remaining()];
+            byteBuffer.get(planeData);
 
             for (int j = 0; j < planeData.length; j += pixelStride) {
                 imageData[lastIndex++] = planeData[j];
             }
         }
 
-        frameBuffer[index].yuv.put(0, 0, imageData);
+        tempYuv.put(0, 0, imageData);
+        Imgproc.cvtColor(tempYuv, blurLevels.get(0), Imgproc.COLOR_YUV420p2BGR);
+        blurDown(gBlurLevels);
+        frameBuffer[index].rgb = blurLevels.get(gBlurLevels).clone();
     }
 
     public void addImage(Image image){
         incrementIndex();
-        image2yuv(image, index);
-        yuv2rgb(index);
+        image2mat(image, index);
     }
 
     private String round(double num){
@@ -80,75 +90,50 @@ public class CardioCamProcessor {
         }
     }
 
-    public void img2bitmap(){
-        Core.flip(frameBuffer[index].rgb.t(), dispRgb, -1);
-        Mat bottom = dispRgb.colRange(0, dispRgb.cols()).rowRange(0,dispRgb.rows()/2);
-        Mat bottom2 = blur(bottom, 5);
-        Mat concat = new Mat();
-        Mat zpad = Mat.zeros(bottom2.rows(), bottom.cols() - bottom2.cols(), CvType.CV_8UC3);
-        Core.hconcat(Arrays.asList(bottom2, zpad), concat);
-        //dispRgb = blur(dispRgb, 5);
-        concat.copyTo(bottom);
-        //Mat concat = new Mat();
-        //Mat zpad = Mat.zeros(1920,1080-1056, CvType.CV_8UC3);
-        //Core.hconcat(Arrays.asList(dispRgb, zpad), concat);
-        Utils.matToBitmap(dispRgb, frameBuffer[index].bm);
-        //Utils.matToBitmap(dispRgb, frameBuffer[index].bm);
-    }
-
     public Bitmap getBitmap(){
-        return frameBuffer[index].bm;
+        blurUp(gBlurLevels);
+        Core.flip(blurLevels.get(0).t(), dispRgb, -1);
+        Utils.matToBitmap(dispRgb, tempBm);
+        return tempBm;
     }
 
-    private Mat blur(Mat input, int nlevels){
-        return blurUp(blurDown(input,nlevels),nlevels);
-    }
-
-    private Mat blurDown(Mat input , int nlevels){
-        Mat src;
-        if (nlevels > 1){
-            src = blurDown(input, nlevels-1);
-        }else{
-            src = input;
+    private void blurDown(int level){
+        if (level > 1){
+            blurDown(level-1);
         }
-        Mat dst = new Mat(src.rows() / 2, src.cols() / 2, CvType.CV_8UC3);
-        Imgproc.pyrDown(src,dst,dst.size());
-        return dst;
+        Imgproc.pyrDown(blurLevels.get(level-1), blurLevels.get(level), blurLevels.get(level).size());
     }
 
-    private Mat blurUp(Mat input , int nlevels){
-        Mat src;
-        if (nlevels > 1){
-            src = blurUp(input, nlevels - 1);
-        }else{
-            src = input.clone();
+    private void blurUp(int level){
+        if (level > 1){
+            blurUp(level - 1);
         }
-        Mat dst = new Mat(src.rows() * 2, src.cols() * 2, CvType.CV_8UC3);
-        Imgproc.pyrUp(src, dst, dst.size());
-        return dst;
+        Imgproc.pyrUp(blurLevels.get(gBlurLevels-level+1), blurLevels.get(gBlurLevels -level), blurLevels.get(gBlurLevels -level).size());
     }
 
     private class CcFrame{
 
         public CcFrame(){
-            yuv = new Mat(height + height / 2, width, CvType.CV_8UC1);
             rgb = new Mat(height, width, CvType.CV_8UC3);
-            bm = Bitmap.createBitmap(height, width, Bitmap.Config.ARGB_8888); //swapped dimensions
         }
 
-        public Mat yuv;
         public Mat rgb;
-        public Bitmap bm;
     }
 
     int index = 0;
-    int bufferSize = 10;
+    int bufferSize = 50;
     CcFrame[] frameBuffer;
     DecimalFormat df = new DecimalFormat("###");
     int width = 0;
     int height = 0;
     Mat dispRgb;
-    Mat lowerHalf;
-    int gBlurLevel = 6;
-
+    int gBlurLevels = 5;
+    int dimenRatio = (int) Math.round(Math.pow(2, gBlurLevels));
+    Mat tempYuv;
+    Mat tempRgb;
+    Bitmap tempBm;
+    ArrayList<Mat> blurLevels = new ArrayList<>();
+    byte[] imageData;
+    Image.Plane[] planes;
+    ByteBuffer byteBuffer;
 }
