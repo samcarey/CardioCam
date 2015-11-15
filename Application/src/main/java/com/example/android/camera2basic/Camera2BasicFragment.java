@@ -281,7 +281,7 @@ public class Camera2BasicFragment extends Fragment
 
 
 
-                displayText = ccProc.getMeansRGB();
+                displayText = ccProc.getFrameRate();
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

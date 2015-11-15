@@ -49,15 +49,18 @@ public class CardioCamProcessor {
         return round(means[0]) + ", " + round(means[1]) + ", " + round(means[2]);
     }
 
+    public String getFrameRate(){
+        return threeDecimals.format(frameRate);
+    }
+
     private void image2mat(Image image, int index){
         planes = image.getPlanes();
-
         byteBuffer = planes[0].getBuffer();
         int lastIndex = byteBuffer.remaining();
         byteBuffer.get(imageData, 0, lastIndex);
         int pixelStride = planes[1].getPixelStride();
 
-        for (int i = 1; i < 3; i++) {
+        for (int i = 1 ; i < 3 ; i++) {
             byteBuffer = planes[i].getBuffer();
             byte[] planeData = new byte[byteBuffer.remaining()];
             byteBuffer.get(planeData);
@@ -71,6 +74,7 @@ public class CardioCamProcessor {
         Imgproc.cvtColor(tempYuv, blurLevels.get(0), Imgproc.COLOR_YUV420p2BGR);
         blurDown(gBlurLevels);
         frameBuffer[index].rgb = blurLevels.get(gBlurLevels).clone();
+        Imgproc.cvtColor(frameBuffer[index].rgb, frameBuffer[index].rgb, Imgproc.COLOR_BGR2YUV);
     }
 
     public void addImage(Image image){
@@ -85,6 +89,9 @@ public class CardioCamProcessor {
     private void incrementIndex(){
         if (index >= bufferSize - 1){
             index = 0;
+            newTime = System.nanoTime();
+            if (oldTime != 0) frameRate = bufferSize/((newTime-oldTime)*1e-9);
+            oldTime = newTime;
         }else{
             index++;
         }
@@ -115,15 +122,18 @@ public class CardioCamProcessor {
 
         public CcFrame(){
             rgb = new Mat(height, width, CvType.CV_8UC3);
+            yuv = new Mat(height, width, CvType.CV_8UC3);
         }
 
         public Mat rgb;
+        public Mat yuv;
     }
 
     int index = 0;
-    int bufferSize = 50;
+    int bufferSize = 100;
     CcFrame[] frameBuffer;
     DecimalFormat df = new DecimalFormat("###");
+    DecimalFormat threeDecimals = new DecimalFormat("###.###");
     int width = 0;
     int height = 0;
     Mat dispRgb;
@@ -136,4 +146,7 @@ public class CardioCamProcessor {
     byte[] imageData;
     Image.Plane[] planes;
     ByteBuffer byteBuffer;
+    long oldTime = 0;
+    long newTime = 0;
+    double frameRate = 30;
 }
