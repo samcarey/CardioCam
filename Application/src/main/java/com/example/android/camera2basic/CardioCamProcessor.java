@@ -8,6 +8,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
@@ -36,24 +37,17 @@ public class CardioCamProcessor {
         }
         imageData = new byte[width*height*ImageFormat.getBitsPerPixel(ImageFormat.YUV_420_888)/8];
 
-
         stackY = new Mat(this.width*this.height, bufferSize, typeDFT1);
         stackU = new Mat(this.width*this.height, bufferSize, typeDFT1);
         stackV = new Mat(this.width*this.height, bufferSize, typeDFT1);
-        mask = new Mat(this.width*this.height, bufferSize, typeDFT1);
+
+        stackYc = new Mat(this.width*this.height, bufferSize, typeDFT1c);
+        stackUc = new Mat(this.width*this.height, bufferSize, typeDFT1c);
+        stackVc = new Mat(this.width*this.height, bufferSize, typeDFT1c);
+
         typeConverted = new Mat(this.height, this.width, typeDFT3);
-        Mat ones = Mat.ones(mask.rows(),1,typeDFT1);
-        Mat zeros = Mat.zeros(mask.rows(), 1, typeDFT1);
-        int lowerFreq = 0;
-        int upperFreq = mask.cols();
-        for (int i = 0 ; i < mask.cols() ; i++){
-            Mat col = mask.col(i);
-            if (i >= lowerFreq && i <= upperFreq){
-                ones.copyTo(col);
-            }else{
-                zeros.copyTo(col);
-            }
-        }
+        zeros = Mat.zeros(this.width*this.height, 1, typeDFT1c);
+        rgb = new Mat(height, width, typeDisp);
     }
 
     public String getFrameRate(){
@@ -78,10 +72,11 @@ public class CardioCamProcessor {
         }
 
         tempYuv.put(0, 0, imageData);
-        Imgproc.cvtColor(tempYuv, blurLevels.get(0), Imgproc.COLOR_YUV420p2BGR);
+        Imgproc.cvtColor(tempYuv, tempRgb, Imgproc.COLOR_YUV420p2BGR);
+        tempRgb.copyTo(blurLevels.get(0));
         blurDown(gBlurLevels);
-        frameBuffer[index].rgb = blurLevels.get(gBlurLevels);
-        Imgproc.cvtColor(frameBuffer[index].rgb, frameBuffer[index].yuv, Imgproc.COLOR_RGB2YUV);
+        rgb = blurLevels.get(gBlurLevels);
+        Imgproc.cvtColor(rgb, frameBuffer[index].yuv, Imgproc.COLOR_RGB2YUV);
         packUnfiltered();
     }
 
@@ -101,35 +96,57 @@ public class CardioCamProcessor {
     }
 
     private void temporalFilter(){
-        Core.dft(stackY, stackY, Core.DFT_ROWS, 0);
-        Core.multiply(stackY, mask, stackY);
-        Core.dft(stackY, stackY, Core.DFT_ROWS | Core.DFT_INVERSE | Core.DFT_SCALE, 0);
+        Core.dft(stackY, stackYc, Core.DFT_ROWS | Core.DFT_COMPLEX_OUTPUT, 0);
+        Core.dft(stackU, stackUc, Core.DFT_ROWS | Core.DFT_COMPLEX_OUTPUT, 0);
+        Core.dft(stackV, stackVc, Core.DFT_ROWS | Core.DFT_COMPLEX_OUTPUT, 0);
 
-        Core.dft(stackU, stackU, Core.DFT_ROWS, 0);
-        Core.multiply(stackU, mask, stackU);
-        Core.dft(stackU, stackU, Core.DFT_ROWS | Core.DFT_INVERSE | Core.DFT_SCALE, 0);
+        freqThresh();
 
-        Core.dft(stackV, stackV, Core.DFT_ROWS, 0);
-        Core.multiply(stackV, mask, stackV);
-        Core.dft(stackV, stackV, Core.DFT_ROWS | Core.DFT_INVERSE | Core.DFT_SCALE, 0);
+        Core.dft(stackYc, stackY, Core.DFT_ROWS | Core.DFT_INVERSE | Core.DFT_SCALE | Core.DFT_REAL_OUTPUT, 0);
+        Core.dft(stackUc, stackU, Core.DFT_ROWS | Core.DFT_INVERSE | Core.DFT_SCALE | Core.DFT_REAL_OUTPUT, 0);
+        Core.dft(stackVc, stackV, Core.DFT_ROWS | Core.DFT_INVERSE | Core.DFT_SCALE | Core.DFT_REAL_OUTPUT, 0);
+
         count++;
+    }
+
+    private void freqThresh(){
+        int lowerIndex = (int) Math.round(lowerFreq/frameRate*(bufferSize-1));
+        int upperIndex = (int) Math.round(upperFreq/frameRate*(bufferSize-1));
+
+        for (int index = 0 ; index < bufferSize ; index++){
+            if (index < lowerIndex || index > upperIndex){
+                insertionPoint = stackYc.col(index);
+                zeros.copyTo(insertionPoint);
+                insertionPoint = stackUc.col(index);
+                zeros.copyTo(insertionPoint);
+                insertionPoint = stackVc.col(index);
+                zeros.copyTo(insertionPoint);
+            }else{
+
+            }
+        }
+    }
+
+    private void amplify(){
+        Core.multiply(stackY, luminAlpha, stackY);
+        Core.multiply(stackU, chromAlpha, stackU);
+        Core.multiply(stackV, chromAlpha, stackV);
     }
 
     private void unpackFiltered(){
         for (int index = 0 ; index < bufferSize ; index++) {
             for (int i = 0; i < width; i++) {
                 insertionPoint = channels.get(0).col(i);
-                stackY.col(index).rowRange(i * height, (i + 1) * height).copyTo(insertionPoint);
+                stackY.col(index).rowRange(i*height,(i+1)*height).copyTo(insertionPoint);
                 insertionPoint = channels.get(1).col(i);
-                stackU.col(index).rowRange(i * height, (i + 1) * height).copyTo(insertionPoint);
+                stackU.col(index).rowRange(i*height,(i+1)*height).copyTo(insertionPoint);
                 insertionPoint = channels.get(2).col(i);
-                stackV.col(index).rowRange(i * height, (i + 1) * height).copyTo(insertionPoint);
+                stackV.col(index).rowRange(i*height,(i+1)*height).copyTo(insertionPoint);
             }
 
             Core.merge(channels, typeConverted);
             typeConverted.convertTo(frameBuffer[index].yuvFiltered, typeDisp);
         }
-        filteredReady = true;
     }
 
     public void addImage(Image image){
@@ -148,24 +165,29 @@ public class CardioCamProcessor {
 
     private void bufferFull(){
         newTime = System.nanoTime();
-        if (oldTime != 0) frameRate = bufferSize/((newTime-oldTime)*1e-9);
+        refreshPeriod = (newTime-oldTime)*1e-9;
+        if (oldTime != 0) frameRate = bufferSize/(refreshPeriod);
         oldTime = newTime;
         temporalFilter();
+        amplify();
         unpackFiltered();
+        filteredReady = true;
     }
 
-
     public Bitmap getBitmap(){
-
         if (filteredReady){
-            //color order? DataTypes?
             Imgproc.cvtColor(frameBuffer[index].yuvFiltered, blurLevels.get(gBlurLevels), Imgproc.COLOR_YUV2RGB);
+
         }else{
-            frameBuffer[index].rgb.copyTo(blurLevels.get(gBlurLevels));
+            rgb.copyTo(blurLevels.get(gBlurLevels));
         }
 
         blurUp(gBlurLevels);
-        Core.flip(blurLevels.get(0).t(), dispRgb, -1);
+
+        Core.add(tempRgb, blurLevels.get(0), dispRgb);
+        //dispRgb = blurLevels.get(0);
+
+        Core.flip(dispRgb.t(), dispRgb, -1);
         Utils.matToBitmap(dispRgb, tempBm);
         return tempBm;
     }
@@ -191,16 +213,15 @@ public class CardioCamProcessor {
     private class CcFrame{
 
         public CcFrame(){
-            rgb = new Mat(height, width, typeDisp);
             yuv = new Mat(height, width, typeDisp);
             yuvFiltered = new Mat(height, width, typeDisp);
         }
 
-        public Mat rgb;
         public Mat yuvFiltered;
         public Mat yuv;
     }
 
+    Mat rgb;
     int index = 0;
     int bufferSize = 64;
     CcFrame[] frameBuffer;
@@ -219,14 +240,17 @@ public class CardioCamProcessor {
     ByteBuffer byteBuffer;
     long oldTime = 0;
     long newTime = 0;
-    double frameRate = 30;
+    double frameRate = 10;
     double refreshPeriod = 10;
     Mat stackY;
     Mat stackU;
     Mat stackV;
-    Mat mask;
+    Mat stackYc;
+    Mat stackUc;
+    Mat stackVc;
     Mat typeConverted;
     int typeDFT1 = CvType.CV_32FC1; //type == CV_32FC1 || type == CV_32FC2 || type == CV_64FC1 || type == CV_64FC2
+    int typeDFT1c = CvType.CV_32FC2; //type == CV_32FC1 || type == CV_32FC2 || type == CV_64FC1 || type == CV_64FC2
     int typeDFT3 = CvType.CV_32FC3;
     int typeDisp = CvType.CV_8UC3;
     List<Mat> channels = new ArrayList<>();
@@ -234,5 +258,11 @@ public class CardioCamProcessor {
     int count = 0;
     Boolean filteredReady = false;
     double indicator = 0;
-
+    double lowerFreq = 60/60; //bpm
+    double upperFreq = 150/60;
+    Mat zeros;
+    double alpha = 1;
+    double chromAtten = 1;
+    Scalar luminAlpha = new Scalar(alpha);
+    Scalar chromAlpha = new Scalar(alpha*chromAtten);
 }
