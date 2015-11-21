@@ -47,6 +47,9 @@ public class CardioCamProcessor {
 
         typeConverted = new Mat(this.height, this.width, typeDFT3);
         zeros = Mat.zeros(this.width*this.height, 1, typeDFT1c);
+        halves = Mat.ones(this.width*this.height, 1, typeDFT1);
+        Core.multiply(halves, new Scalar(midpoint), halves);
+        halves.convertTo(halves, typeDFT1c);
         rgb = new Mat(height, width, typeDisp);
     }
 
@@ -112,19 +115,28 @@ public class CardioCamProcessor {
     private void freqThresh(){
         int lowerIndex = (int) Math.round(lowerFreq/frameRate*(bufferSize-1));
         int upperIndex = (int) Math.round(upperFreq/frameRate*(bufferSize-1));
-
         for (int index = 0 ; index < bufferSize ; index++){
             if (index < lowerIndex || index > upperIndex){
                 insertionPoint = stackYc.col(index);
                 zeros.copyTo(insertionPoint);
                 insertionPoint = stackUc.col(index);
-                zeros.copyTo(insertionPoint);
+                halves.copyTo(insertionPoint);
                 insertionPoint = stackVc.col(index);
-                zeros.copyTo(insertionPoint);
+                halves.copyTo(insertionPoint);
             }else{
 
             }
         }
+    }
+
+    private double[][][] scan(Mat mat){
+        double[][][] array  = new double[mat.rows()][mat.cols()][2];
+        for (int i = 0 ; i < mat.rows() ; i++){
+            for (int j = 0 ; j < mat.cols() ; j++){
+                array[i][j] = mat.get(i,j);
+            }
+        }
+        return array;
     }
 
     private void amplify(){
@@ -177,15 +189,15 @@ public class CardioCamProcessor {
     public Bitmap getBitmap(){
         if (filteredReady){
             Imgproc.cvtColor(frameBuffer[index].yuvFiltered, blurLevels.get(gBlurLevels), Imgproc.COLOR_YUV2RGB);
-
-        }else{
-            rgb.copyTo(blurLevels.get(gBlurLevels));
+            blurUp(gBlurLevels);
+            if (superposition) {
+                Core.add(tempRgb, blurLevels.get(0), dispRgb);
+            }else{
+                dispRgb = blurLevels.get(0);
+            }
+        } else {
+            dispRgb = tempRgb;
         }
-
-        blurUp(gBlurLevels);
-
-        Core.add(tempRgb, blurLevels.get(0), dispRgb);
-        //dispRgb = blurLevels.get(0);
 
         Core.flip(dispRgb.t(), dispRgb, -1);
         Utils.matToBitmap(dispRgb, tempBm);
@@ -261,8 +273,11 @@ public class CardioCamProcessor {
     double lowerFreq = 60/60; //bpm
     double upperFreq = 150/60;
     Mat zeros;
+    Mat halves;
     double alpha = 1;
     double chromAtten = 1;
     Scalar luminAlpha = new Scalar(alpha);
     Scalar chromAlpha = new Scalar(alpha*chromAtten);
+    double midpoint = (255-1)*bufferSize/2;
+    Boolean superposition = false;
 }
