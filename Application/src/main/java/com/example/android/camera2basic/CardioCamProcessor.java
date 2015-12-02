@@ -20,7 +20,8 @@ import java.util.List;
 
 public class CardioCamProcessor {
 
-    public CardioCamProcessor(int width, int height) {
+    public CardioCamProcessor(int width, int height, Boolean flip) {
+        this.flip = flip;
         this.tempYuv = new Mat(height + height / 2, width, CvType.CV_8UC1);
         this.tempRgb = new Mat(height, width, typeDisp);
         this.tempBm = Bitmap.createBitmap(height, width, Bitmap.Config.ARGB_8888); //swapped dims
@@ -218,7 +219,12 @@ public class CardioCamProcessor {
             dispRgb = tempRgb;
         }
 
-        Core.flip(dispRgb.t(), dispRgb, -1);
+        if (flip) {
+            Core.flip(dispRgb.t(), dispRgb, -1);
+        }else {
+            Core.flip(dispRgb.t(), dispRgb, 1);
+        }
+
         Utils.matToBitmap(dispRgb, tempBm);
         return tempBm;
     }
@@ -297,11 +303,12 @@ public class CardioCamProcessor {
     Mat halves;
     Mat chromAlphas;
     Mat luminAlphas;
-    double alpha = 50;
+    double alpha = 25;
     double chromAtten = 1;
     Scalar luminAlpha = new Scalar(alpha,alpha);
     Scalar chromAlpha = new Scalar(alpha*chromAtten,alpha*chromAtten);
     Scalar midpoint = new Scalar((255-1)*bufferSize/2);
     Boolean superposition = false;
     Boolean amplify = true;
+    Boolean flip = true;
 }

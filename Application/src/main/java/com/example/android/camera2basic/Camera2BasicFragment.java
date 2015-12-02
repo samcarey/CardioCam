@@ -691,7 +691,11 @@ public class Camera2BasicFragment extends Fragment
 
             //Sam Carey :)
             mPreviewRequestBuilder.addTarget(mImageReader.getSurface());
-            ccProc = new CardioCamProcessor(mPreviewSize.getWidth(), mPreviewSize.getHeight());
+            if (mCameraNum == 1){
+                ccProc = new CardioCamProcessor(mPreviewSize.getWidth(), mPreviewSize.getHeight(),true);
+            }else{
+                ccProc = new CardioCamProcessor(mPreviewSize.getWidth(), mPreviewSize.getHeight(),false);
+            }
 
             // Here, we create a CameraCaptureSession for camera preview.
             mCameraDevice.createCaptureSession(Arrays.asList(surface, mImageReader.getSurface()),
