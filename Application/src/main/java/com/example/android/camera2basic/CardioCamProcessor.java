@@ -46,10 +46,11 @@ public class CardioCamProcessor {
         stackVc = new Mat(this.width*this.height, bufferSize, typeDFT1c);
 
         typeConverted = new Mat(this.height, this.width, typeDFT3);
-        zeros = Mat.zeros(this.width*this.height, 1, typeDFT1c);
+        zeros = Mat.zeros(this.width * this.height, 1, typeDFT1c);
         halves = Mat.ones(this.width*this.height, 1, typeDFT1);
-        Core.multiply(halves, new Scalar(midpoint), halves);
+        Core.multiply(halves, midpoint, halves);
         halves.convertTo(halves, typeDFT1c);
+
         rgb = new Mat(height, width, typeDisp);
     }
 
@@ -117,16 +118,40 @@ public class CardioCamProcessor {
         int upperIndex = (int) Math.round(upperFreq/frameRate*(bufferSize-1));
         for (int index = 0 ; index < bufferSize ; index++){
             if (index < lowerIndex || index > upperIndex){
-                insertionPoint = stackYc.col(index);
-                zeros.copyTo(insertionPoint);
-                insertionPoint = stackUc.col(index);
-                halves.copyTo(insertionPoint);
-                insertionPoint = stackVc.col(index);
-                halves.copyTo(insertionPoint);
+                killFreq(index);
             }else{
-
+                if(amplify){
+                    ampFreq(index);
+                }
             }
         }
+    }
+
+    private void killFreq(int index){
+        insertionPoint = stackYc.col(index);
+        zeros.copyTo(insertionPoint);
+        insertionPoint = stackUc.col(index);
+        halves.copyTo(insertionPoint);
+        insertionPoint = stackVc.col(index);
+        halves.copyTo(insertionPoint);
+    }
+
+    private void ampFreq(int index){
+        double[][][] array;
+        insertionPoint = stackYc.col(index);
+        array = scan(insertionPoint);
+        Core.multiply(insertionPoint, luminAlpha, insertionPoint);
+        array = scan(insertionPoint);
+        insertionPoint = stackUc.col(index);
+        //array = scan(halves);
+        //Core.subtract(insertionPoint, halves, insertionPoint);
+        Core.multiply(insertionPoint, chromAlpha, insertionPoint);
+        //Core.add(insertionPoint, halves, insertionPoint);
+
+        insertionPoint = stackVc.col(index);
+        //Core.subtract(insertionPoint, halves, insertionPoint);
+        Core.multiply(insertionPoint, chromAlpha, insertionPoint);
+        //Core.add(insertionPoint, halves, insertionPoint);
     }
 
     private double[][][] scan(Mat mat){
@@ -137,12 +162,6 @@ public class CardioCamProcessor {
             }
         }
         return array;
-    }
-
-    private void amplify(){
-        Core.multiply(stackY, luminAlpha, stackY);
-        Core.multiply(stackU, chromAlpha, stackU);
-        Core.multiply(stackV, chromAlpha, stackV);
     }
 
     private void unpackFiltered(){
@@ -181,7 +200,7 @@ public class CardioCamProcessor {
         if (oldTime != 0) frameRate = bufferSize/(refreshPeriod);
         oldTime = newTime;
         temporalFilter();
-        amplify();
+        //amplify();
         unpackFiltered();
         filteredReady = true;
     }
@@ -270,14 +289,19 @@ public class CardioCamProcessor {
     int count = 0;
     Boolean filteredReady = false;
     double indicator = 0;
-    double lowerFreq = 60/60; //bpm
-    double upperFreq = 150/60;
+    double beatsPerMinuteL = 65;
+    double beatsPerMinuteU = 80;
+    double lowerFreq = beatsPerMinuteL/60; //bps
+    double upperFreq = beatsPerMinuteU/60;
     Mat zeros;
     Mat halves;
-    double alpha = 1;
+    Mat chromAlphas;
+    Mat luminAlphas;
+    double alpha = 50;
     double chromAtten = 1;
-    Scalar luminAlpha = new Scalar(alpha);
-    Scalar chromAlpha = new Scalar(alpha*chromAtten);
-    double midpoint = (255-1)*bufferSize/2;
+    Scalar luminAlpha = new Scalar(alpha,alpha);
+    Scalar chromAlpha = new Scalar(alpha*chromAtten,alpha*chromAtten);
+    Scalar midpoint = new Scalar((255-1)*bufferSize/2);
     Boolean superposition = false;
+    Boolean amplify = true;
 }

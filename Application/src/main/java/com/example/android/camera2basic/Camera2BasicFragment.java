@@ -249,6 +249,7 @@ public class Camera2BasicFragment extends Fragment
     CardioCamProcessor ccProc;
     ImageView mImageView;
     Bitmap bm;
+    Boolean tracking = false;
 
     /**
      * Number of camera currently being used
@@ -661,6 +662,8 @@ public class Camera2BasicFragment extends Fragment
         }
     }
 
+
+
     /**
      * Creates a new {@link CameraCaptureSession} for camera preview.
      */
@@ -679,8 +682,11 @@ public class Camera2BasicFragment extends Fragment
             mPreviewRequestBuilder
                     = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
 
+
+
             //Sam Carey omission must wait for Marshmallow update :(
             //mPreviewRequestBuilder.addTarget(surface);
+
 
 
             //Sam Carey :)
@@ -701,6 +707,7 @@ public class Camera2BasicFragment extends Fragment
                             // When the session is ready, we start displaying the preview.
                             mCaptureSession = cameraCaptureSession;
                             try {
+
                                 // Auto focus should be continuous for camera preview.
                                 mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
                                         CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
@@ -712,7 +719,7 @@ public class Camera2BasicFragment extends Fragment
                                 mPreviewRequest = mPreviewRequestBuilder.build();
                                 mCaptureSession.setRepeatingRequest(mPreviewRequest,
                                         mCaptureCallback, mBackgroundHandler);
-                            } catch (CameraAccessException e) {
+                            }catch(CameraAccessException e){
                                 e.printStackTrace();
                             }
                         }
@@ -871,11 +878,54 @@ public class Camera2BasicFragment extends Fragment
         }
     }
 
+    /////////////////////////////
+    //Sam Carey
+    private void turnOffAE(){
+        try {
+            /*
+            // Auto focus should be continuous for camera preview.
+            mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
+                    CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+            // Flash is automatically enabled when necessary.
+            mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
+                    CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+            */
+            //Sam Carey
+            //mPreviewRequestBuilder.set(CaptureRequest.CONTROL_MODE,
+            //        CaptureRequest.CONTROL_MODE_OFF);
+            mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_OFF);
+
+            // Finally, we start displaying the camera preview.
+            mPreviewRequest = mPreviewRequestBuilder.build();
+            mCaptureSession.stopRepeating();
+            mCaptureSession.setRepeatingRequest(mPreviewRequest,
+                    mCaptureCallback, mBackgroundHandler);
+        }catch(CameraAccessException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void startTracking(){
+        turnOffAE();
+    }
+
+    private void stopTracking(){
+
+    }
+    ///////////////////////////////////////////
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.track: {
-                takePicture();
+                if (!tracking){
+                    startTracking();
+                    tracking = true;
+                }else{
+                    stopTracking();
+                    tracking = false;
+                }
+
                 break;
             }
             case R.id.info: {
