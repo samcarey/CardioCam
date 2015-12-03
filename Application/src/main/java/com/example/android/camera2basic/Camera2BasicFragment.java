@@ -27,13 +27,10 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
-import android.graphics.drawable.BitmapDrawable;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
@@ -46,14 +43,13 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
-import android.media.ImageWriter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentCompat;
-import android.support.v4.app.ActivityCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -62,23 +58,18 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.opencv.core.*;
-import org.opencv.android.*;
+import android.widget.ToggleButton;
 
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.math.RoundingMode;
 import java.nio.ByteBuffer;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -243,13 +234,17 @@ public class Camera2BasicFragment extends Fragment
     private File mFile;
 
     //Sam Carey
-    private TextView mTextView;
+    TextView mDataView;
     String displayText;
     //ImageWriter imageWriter; //Marshmallow
     CardioCamProcessor ccProc;
     ImageView mImageView;
     Bitmap bm;
-    Boolean tracking = false;
+    EditText chromaAttenText;
+    EditText alphaText;
+    EditText persistenceText;
+    EditText bandwidthText;
+    EditText centerFreq;
 
     /**
      * Number of camera currently being used
@@ -287,7 +282,7 @@ public class Camera2BasicFragment extends Fragment
                     @Override
                     public void run() {
                         // This code will always run on the UI thread, therefore is safe to modify UI elements.
-                        mTextView.setText(displayText);
+                        mDataView.setText(displayText);
                         mImageView.setImageBitmap(bm);
                     }
                 });
@@ -450,15 +445,114 @@ public class Camera2BasicFragment extends Fragment
         return inflater.inflate(R.layout.fragment_camera2_basic, container, false);
     }
 
+
+
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-        view.findViewById(R.id.track).setOnClickListener(this);
+        //Sam Carey
+        initializeOptions(view);
+
         view.findViewById(R.id.info).setOnClickListener(this);
         view.findViewById(R.id.switchCamera).setOnClickListener(this);
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.previewFrame);
-        mTextView = (TextView) view.findViewById(R.id.textView);
+        mDataView = (TextView) view.findViewById(R.id.dataView);
         mImageView = (ImageView) view.findViewById(R.id.imageView);
         mCameraNum = 1;
+    }
+
+    ToggleButton unit;
+    ToggleButton overlay;
+
+    private void initializeOptions(View view){
+        //initializeSeekBars(view);
+        chromaAttenText = (EditText) view.findViewById(R.id.chromaAttenView);
+        alphaText = (EditText) view.findViewById(R.id.alphaView);
+        persistenceText = (EditText) view.findViewById(R.id.persistenceView);
+        bandwidthText = (EditText) view.findViewById(R.id.bandwidth);
+        centerFreq = (EditText) view.findViewById(R.id.centerFreq);
+        unit = (ToggleButton) view.findViewById(R.id.unit);
+        overlay = (ToggleButton) view.findViewById(R.id.overlay);
+
+        chromaAttenText.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                double val = parseString(chromaAttenText.getText().toString());
+                if (val >= 0){
+                    ccProc.setChroma(val);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+        alphaText.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                double val = parseString(alphaText.getText().toString());
+                if (val >= 0){
+                    ccProc.setAlpha(val);
+                }
+                //ccProc.setAlpha(Double.parseDouble(alphaText.getText().toString()));
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+        persistenceText.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                double val = parseString(chromaAttenText.getText().toString());
+                if (val >= 0){
+                    ccProc.setPersistence(val);
+                }
+                //ccProc.setPersistence(Double.parseDouble(chromaAttenText.getText().toString()));
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+        bandwidthText.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                double val = parseString(bandwidthText.getText().toString());
+                if (val >= 0){
+                    ccProc.setBandwidth(val, !unit.isChecked());
+                }
+                //ccProc.setBandwidth(Double.parseDouble(bandwidthText.getText().toString()),
+                //        !unit.isActivated());
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+        centerFreq.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                double val = parseString(centerFreq.getText().toString());
+                if (val >= 0){
+                    ccProc.setCenterFreq(val, !unit.isChecked());
+                }
+                //ccProc.setCenterFreq(Double.parseDouble(centerFreq.getText().toString()),
+                //        !unit.isActivated());
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+        overlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ccProc.setSuperposition(overlay.isChecked());
+            }
+        });
+    }
+
+    private double parseString(String string){
+        try {
+            return Double.parseDouble(string);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 
     @Override
@@ -916,22 +1010,33 @@ public class Camera2BasicFragment extends Fragment
     private void stopTracking(){
 
     }
+/*
+    private void initializeSeekBars(View view){
+        seekBar1 = (SeekBar) view.findViewById(R.id.seekBar1);
+        seekText1 = (TextView) view.findViewById(R.id.seekText1);
+        seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progress = 0;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
+                progress = progressValue;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                seekText1.setText("Covered: " + progress + "/" + seekBar.getMax());
+            }
+        });
+    }
+*/
     ///////////////////////////////////////////
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.track: {
-                if (!tracking){
-                    startTracking();
-                    tracking = true;
-                }else{
-                    stopTracking();
-                    tracking = false;
-                }
-
-                break;
-            }
             case R.id.info: {
                 Activity activity = getActivity();
                 if (null != activity) {

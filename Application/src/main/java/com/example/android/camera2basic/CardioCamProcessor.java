@@ -295,15 +295,15 @@ public class CardioCamProcessor {
     int count = 0;
     Boolean filteredReady = false;
     double indicator = 0;
-    double beatsPerMinuteL = 65;
+    double beatsPerMinuteL = 70;
     double beatsPerMinuteU = 80;
-    double lowerFreq = beatsPerMinuteL/60; //bps
+    double lowerFreq = beatsPerMinuteL/60; //bm 2 bps
     double upperFreq = beatsPerMinuteU/60;
+    double centerFreqBpm = (beatsPerMinuteL+beatsPerMinuteU)/2;
+    double bandwidthBpm = beatsPerMinuteU-beatsPerMinuteL;
     Mat zeros;
     Mat halves;
-    Mat chromAlphas;
-    Mat luminAlphas;
-    double alpha = 25;
+    double alpha = 50;
     double chromAtten = 1;
     Scalar luminAlpha = new Scalar(alpha,alpha);
     Scalar chromAlpha = new Scalar(alpha*chromAtten,alpha*chromAtten);
@@ -311,4 +311,45 @@ public class CardioCamProcessor {
     Boolean superposition = false;
     Boolean amplify = true;
     Boolean flip = true;
+
+    public void setChroma(double val){
+        chromAtten = val;
+        chromAlpha = new Scalar(alpha*chromAtten,alpha*chromAtten);
+    }
+    public void setAlpha(double val){
+        alpha = val;
+        luminAlpha = new Scalar(alpha,alpha);
+        chromAlpha = new Scalar(alpha*chromAtten,alpha*chromAtten);
+    }
+    public void setBandwidth(double val, Boolean unitBpm){
+        if (unitBpm){
+            bandwidthBpm = val;
+        }else{
+            bandwidthBpm = val*60;
+        }
+        recalculateFreqs();
+    }
+    public void setCenterFreq(double val, Boolean unitBpm){
+        if (unitBpm){
+            centerFreqBpm = val;
+        }else{
+            centerFreqBpm = val*60;
+        }
+        recalculateFreqs();
+    }
+
+    private void recalculateFreqs(){
+        beatsPerMinuteU = centerFreqBpm+bandwidthBpm/2;
+        beatsPerMinuteL = centerFreqBpm-bandwidthBpm/2;
+        upperFreq = beatsPerMinuteU/60; //bm 2 bps
+        lowerFreq = beatsPerMinuteL/60; //bm 2 bps
+    }
+
+    public void setPersistence(double val){
+
+    }
+    public void setSuperposition(Boolean val){
+        superposition = val;
+    }
+
 }

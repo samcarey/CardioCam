@@ -237,13 +237,23 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
+    <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="alpha">1.0</string>
+    <string name="alphaLabel">amplification</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/base-strings.xml -->
     <eat-comment/>
     <string name="app_name">Camera2Basic</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="bandwidth">10</string>
+    <string name="bandwidthLabel">bandwidth</string>
     <string name="bpm">75 BPM</string>
     <string name="camera_error">This device doesn\'t support Camera2 API.</string>
+    <string name="centerFreq">75</string>
+    <string name="centerFreqLabel">centerFreq</string>
+    <string name="chromaAtten">1.0</string>
+    <string name="chromaAttenLabel">colorFactor</string>
     <string name="description_info">Info</string>
     <string name="imageDescription">Processed Image</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/base-strings.xml -->
@@ -252,9 +262,7 @@
         <![CDATA[
         
             
-            This application monitors heart rate by monitoring and amplifying tiny flucuations in
-            skin color due to skin capillaries expanding and relaxing. Point at a face, hold still, and wait.
-
+            This application allows the user to amplify a certain temporal frequency band (pixel-wise).
             Based on MIT video magnification project.
             
         
@@ -262,6 +270,9 @@
     </string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="overlay">overlay</string>
+    <string name="persistence">64</string>
+    <string name="persistenceLabel">fftLength</string>
     <string name="picture">Picture</string>
     <string name="request_permission">This sample needs camera permission.</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.0/res/values/values.xml -->
@@ -271,6 +282,8 @@
     <eat-comment/>
     <string name="stop">Stop</string>
     <string name="track">Track</string>
+    <string name="unit">bpm</string>
+    <string name="unitLabel">units</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>

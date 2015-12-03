@@ -21,9 +21,7 @@
         <![CDATA[
         
             
-            This application monitors heart rate by monitoring and amplifying tiny flucuations in
-            skin color due to skin capillaries expanding and relaxing. Point at a face, hold still, and wait.
-
+            This application allows the user to amplify a certain temporal frequency band (pixel-wise).
             Based on MIT video magnification project.
             
         
