@@ -16,7 +16,6 @@
 
 package com.example.android.camera2basic;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -60,16 +59,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -154,11 +149,6 @@ public class Camera2BasicFragment extends Fragment
     };
 
     /**
-     * ID of the current {@link CameraDevice}.
-     */
-    private String mCameraId;
-
-    /**
      * An {@link AutoFitTextureView} for camera preview.
      */
     private AutoFitTextureView mTextureView;
@@ -234,26 +224,28 @@ public class Camera2BasicFragment extends Fragment
     private File mFile;
 
     //Sam Carey
-    TextView mDataView;
-    String displayText;
-    //ImageWriter imageWriter; //Marshmallow
-    CardioCamProcessor ccProc;
-    ImageView mImageView;
-    Bitmap bm;
-    EditText chromaAttenText;
-    EditText alphaText;
-    EditText persistenceText;
-    EditText bandwidthText;
-    EditText centerFreq;
+    //Declare objects
+    TextView mDataView;         //Display loop counter and calculated frame rate
+    String displayText;         //Content of mDataView
+    CardioCamProcessor ccProc;  //This is where the bulk of this project is implemented. Defined in CardioCamProcessor.java
+    ImageView mImageView;       //Where ccProc results are displayed
+    Bitmap bm;                  //Holds visual results of ccProc
+    EditText chromaAttenText;   //Allow the ratio between color and luminance amplification to be edited
+    EditText alphaText;         //Allow overall amplification factor to be edited
+    //EditText persistenceText;   //ran out of time on this feature
+    EditText bandwidthText;     //Allow bandwidth of filter to be edited
+    EditText centerFreq;        //Allow center frequency of filter to be edited
+    int mCameraNum;             //Number of camera currently being used (front or back)
+    ToggleButton unit;          //Unit for frequencies being entered on front panel (beats per minute or Hz)
+    ToggleButton overlay;       //Whether or not the live preview should be overlayed on the filtered result
 
-    /**
-     * Number of camera currently being used
-     */
-    private int mCameraNum;
-
+    /*
+    //prints message to log screen while plugged attached ADB
     public void print(String string){
         Log.i(getActivity().toString(), "Debug856: " + string);
     }
+    */
+
 
     /**
      * This a callback object for the {@link ImageReader}. "onImageAvailable" will be called when a
@@ -265,28 +257,23 @@ public class Camera2BasicFragment extends Fragment
         @Override
         public void onImageAvailable(ImageReader reader) {
 
-            //Sam Carey wuz hear
-            Image image = reader.acquireLatestImage();
+            //Sam Carey
+            Image image = reader.acquireLatestImage();  //Grab the newest image in the buffer, discarding older ones.
             if (image != null) {
-                //mBackgroundHandler.post(new ImageSaver(image, mFile));
-
-
-                ccProc.addImage(image);
-                //cProc.img2bitmap();
-                bm = ccProc.getBitmap();
-
-
-
-                displayText = ccProc.getFrameRate();
+                ccProc.addImage(image);                         //Add image to the algorithm
+                bm = ccProc.getBitmap();                        //Get whatever the algorithm produces
+                displayText = ccProc.getFrameRate();            //Get frameRate and other misc. data to display.
+                //We have to enclose this code like this so that it will always run on the UI
+                //thread, so that it will be safe to modify UI elements.
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        // This code will always run on the UI thread, therefore is safe to modify UI elements.
                         mDataView.setText(displayText);
+                        //The fact this is needs to be a bitmap might be taxing computations, so
+                        //it'd be nice if I could find another way...
                         mImageView.setImageBitmap(bm);
                     }
                 });
-
                 image.close();
             }
 
@@ -450,29 +437,29 @@ public class Camera2BasicFragment extends Fragment
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         //Sam Carey
-        initializeOptions(view);
+        initializeOptions(view);    //setup UI inputs
+        view.findViewById(R.id.switchCamera).setOnClickListener(this);  //listen for the user wanting to switch cameras
+        mDataView = (TextView) view.findViewById(R.id.dataView);        //link UI objects to internal objects
+        mImageView = (ImageView) view.findViewById(R.id.imageView);     //link UI objects to internal objects
+        mCameraNum = 1;                                                 //begin with the front-facing camera
 
         view.findViewById(R.id.info).setOnClickListener(this);
-        view.findViewById(R.id.switchCamera).setOnClickListener(this);
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.previewFrame);
-        mDataView = (TextView) view.findViewById(R.id.dataView);
-        mImageView = (ImageView) view.findViewById(R.id.imageView);
-        mCameraNum = 1;
     }
 
-    ToggleButton unit;
-    ToggleButton overlay;
-
+    //Sam Carey
+    //setup UI inputs
     private void initializeOptions(View view){
-        //initializeSeekBars(view);
+        //link UI objects to internal objects
         chromaAttenText = (EditText) view.findViewById(R.id.chromaAttenView);
         alphaText = (EditText) view.findViewById(R.id.alphaView);
-        persistenceText = (EditText) view.findViewById(R.id.persistenceView);
+        //persistenceText = (EditText) view.findViewById(R.id.persistenceView); //ran out of time on this feature
         bandwidthText = (EditText) view.findViewById(R.id.bandwidth);
         centerFreq = (EditText) view.findViewById(R.id.centerFreq);
         unit = (ToggleButton) view.findViewById(R.id.unit);
         overlay = (ToggleButton) view.findViewById(R.id.overlay);
 
+        //Listen for changes to the controls and pass them to the algorithm
         chromaAttenText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 double val = parseString(chromaAttenText.getText().toString());
@@ -482,7 +469,6 @@ public class Camera2BasicFragment extends Fragment
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
         alphaText.addTextChangedListener(new TextWatcher() {
@@ -491,34 +477,35 @@ public class Camera2BasicFragment extends Fragment
                 if (val >= 0){
                     ccProc.setAlpha(val);
                 }
-                //ccProc.setAlpha(Double.parseDouble(alphaText.getText().toString()));
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
+        //ran out of time on this feature
+        /*
         persistenceText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                double val = parseString(chromaAttenText.getText().toString());
+                double val = parseString(persistenceText.getText().toString());
                 if (val >= 0){
-                    ccProc.setPersistence(val);
+                    fftSize = (int) Math.round(val);
+                    closeCamera();
+                    openCamera(mTextureView.getWidth(), mTextureView.getHeight());
                 }
-                //ccProc.setPersistence(Double.parseDouble(chromaAttenText.getText().toString()));
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
+        */
         bandwidthText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 double val = parseString(bandwidthText.getText().toString());
                 if (val >= 0){
                     ccProc.setBandwidth(val, !unit.isChecked());
                 }
-                //ccProc.setBandwidth(Double.parseDouble(bandwidthText.getText().toString()),
-                //        !unit.isActivated());
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -531,8 +518,6 @@ public class Camera2BasicFragment extends Fragment
                 if (val >= 0){
                     ccProc.setCenterFreq(val, !unit.isChecked());
                 }
-                //ccProc.setCenterFreq(Double.parseDouble(centerFreq.getText().toString()),
-                //        !unit.isActivated());
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -547,6 +532,8 @@ public class Camera2BasicFragment extends Fragment
         });
     }
 
+    //Sam Carey
+    //Make sure the input is a double, else return -1, indicated it's not
     private double parseString(String string){
         try {
             return Double.parseDouble(string);
@@ -582,15 +569,6 @@ public class Camera2BasicFragment extends Fragment
         closeCamera();
         stopBackgroundThread();
         super.onPause();
-    }
-
-    private void requestCameraPermission() {
-        if (FragmentCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-            new ConfirmationDialog().show(getChildFragmentManager(), FRAGMENT_DIALOG);
-        } else {
-            FragmentCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
-                    REQUEST_CAMERA_PERMISSION);
-        }
     }
 
     @Override
@@ -641,23 +619,6 @@ public class Camera2BasicFragment extends Fragment
                 mImageReader.setOnImageAvailableListener(
                         mOnImageAvailableListener, mBackgroundHandler);
 
-
-                /* //Must wait for Marshmallow update :( ; Can also change format to RGB then.
-                //Sam Carey
-                SurfaceTexture texture = mTextureView.getSurfaceTexture();
-                assert texture != null;
-
-                // We configure the size of default buffer to be the size of camera preview we want.
-                texture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
-
-                // This is the output Surface we need to start preview.
-                Surface surface = new Surface(texture);
-                imageWriter = ImageWriter.newInstance(surface,2);
-                //Sam Carey
-                */
-
-
-
                 // Danger, W.R.! Attempting to use too large a preview size could  exceed the camera
                 // bus' bandwidth limitation, resulting in gorgeous previews but the storage of
                 // garbage capture data.
@@ -674,7 +635,6 @@ public class Camera2BasicFragment extends Fragment
                             mPreviewSize.getHeight(), mPreviewSize.getWidth());
                 }
 
-                //mCameraId = cameraId;
                 return;
             }
         } catch (CameraAccessException e) {
@@ -688,7 +648,7 @@ public class Camera2BasicFragment extends Fragment
     }
 
     /**
-     * Opens the camera specified by {@link Camera2BasicFragment#mCameraId}.
+     * Opens the camera specified by {@link Camera2BasicFragment#mCameraNum}.
      */
     private void openCamera(int width, int height) {
 
@@ -756,8 +716,6 @@ public class Camera2BasicFragment extends Fragment
         }
     }
 
-
-
     /**
      * Creates a new {@link CameraCaptureSession} for camera preview.
      */
@@ -776,20 +734,14 @@ public class Camera2BasicFragment extends Fragment
             mPreviewRequestBuilder
                     = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
 
-
-
-            //Sam Carey omission must wait for Marshmallow update :(
-            //mPreviewRequestBuilder.addTarget(surface);
-
-
-
-            //Sam Carey :)
-            mPreviewRequestBuilder.addTarget(mImageReader.getSurface());
-            if (mCameraNum == 1){
+            //Sam Carey
+            mPreviewRequestBuilder.addTarget(mImageReader.getSurface()); // direct preview frames to where they'll be processed
+            if (mCameraNum == 1){   //check which camera is being used, for orientation purposes
                 ccProc = new CardioCamProcessor(mPreviewSize.getWidth(), mPreviewSize.getHeight(),true);
             }else{
                 ccProc = new CardioCamProcessor(mPreviewSize.getWidth(), mPreviewSize.getHeight(),false);
             }
+
 
             // Here, we create a CameraCaptureSession for camera preview.
             mCameraDevice.createCaptureSession(Arrays.asList(surface, mImageReader.getSurface()),
@@ -865,13 +817,6 @@ public class Camera2BasicFragment extends Fragment
             matrix.postRotate(180, centerX, centerY);
         }
         mTextureView.setTransform(matrix);
-    }
-
-    /**
-     * Initiate a still image capture.
-     */
-    private void takePicture() {
-        lockFocus();
     }
 
     /**
@@ -976,24 +921,15 @@ public class Camera2BasicFragment extends Fragment
         }
     }
 
-    /////////////////////////////
     //Sam Carey
+    //ran out of time on this feature
+    //I was going to turn off lighting adjustment "intellegently"
+    /*
     private void turnOffAE(){
         try {
-            /*
-            // Auto focus should be continuous for camera preview.
-            mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
-                    CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-            // Flash is automatically enabled when necessary.
-            mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-                    CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
-            */
-            //Sam Carey
-            //mPreviewRequestBuilder.set(CaptureRequest.CONTROL_MODE,
-            //        CaptureRequest.CONTROL_MODE_OFF);
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_OFF);
 
-            // Finally, we start displaying the camera preview.
+            // Start displaying the camera preview.
             mPreviewRequest = mPreviewRequestBuilder.build();
             mCaptureSession.stopRepeating();
             mCaptureSession.setRepeatingRequest(mPreviewRequest,
@@ -1004,35 +940,10 @@ public class Camera2BasicFragment extends Fragment
     }
 
     private void startTracking(){
+        lockFocus();
         turnOffAE();
     }
-
-    private void stopTracking(){
-
-    }
-/*
-    private void initializeSeekBars(View view){
-        seekBar1 = (SeekBar) view.findViewById(R.id.seekBar1);
-        seekText1 = (TextView) view.findViewById(R.id.seekText1);
-        seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progress = 0;
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
-                progress = progressValue;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                seekText1.setText("Covered: " + progress + "/" + seekBar.getMax());
-            }
-        });
-    }
-*/
-    ///////////////////////////////////////////
+    */
 
     @Override
     public void onClick(View view) {
@@ -1047,6 +958,8 @@ public class Camera2BasicFragment extends Fragment
                 }
                 break;
             }
+            //Sam Carey
+            //Switch which camera we are using
             case R.id.switchCamera: {
                 Activity activity = getActivity();
                 if (null != activity) {
@@ -1055,56 +968,13 @@ public class Camera2BasicFragment extends Fragment
                     }else{
                         mCameraNum = 0;
                     }
+                    //restart a bunch of stuff (including algorithm) with new camera
                     closeCamera();
                     openCamera(mTextureView.getWidth(), mTextureView.getHeight());
                 }
                 break;
             }
         }
-    }
-
-    /**
-     * Saves a JPEG {@link Image} into the specified {@link File}.
-     */
-    private static class ImageSaver implements Runnable {
-
-        /**
-         * The JPEG image
-         */
-        private final Image mImage;
-        /**
-         * The file we save the image into.
-         */
-        private final File mFile;
-
-        public ImageSaver(Image image, File file) {
-            mImage = image;
-            mFile = file;
-        }
-
-        @Override
-        public void run() {
-            ByteBuffer buffer = mImage.getPlanes()[0].getBuffer();
-            byte[] bytes = new byte[buffer.remaining()];
-            buffer.get(bytes);
-            FileOutputStream output = null;
-            try {
-                output = new FileOutputStream(mFile);
-                output.write(bytes);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                mImage.close();
-                if (null != output) {
-                    try {
-                        output.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
     }
 
     /**
@@ -1149,39 +1019,5 @@ public class Camera2BasicFragment extends Fragment
                     })
                     .create();
         }
-
     }
-
-    /**
-     * Shows OK/Cancel confirmation dialog about camera permission.
-     */
-    public static class ConfirmationDialog extends DialogFragment {
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Fragment parent = getParentFragment();
-            return new AlertDialog.Builder(getActivity())
-                    .setMessage(R.string.request_permission)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            FragmentCompat.requestPermissions(parent,
-                                    new String[]{Manifest.permission.CAMERA},
-                                    REQUEST_CAMERA_PERMISSION);
-                        }
-                    })
-                    .setNegativeButton(android.R.string.cancel,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Activity activity = parent.getActivity();
-                                    if (activity != null) {
-                                        activity.finish();
-                                    }
-                                }
-                            })
-                    .create();
-        }
-    }
-
 }

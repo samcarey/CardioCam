@@ -16,15 +16,12 @@
 -->
 
 <resources>
-    <string name="app_name">Camera2Basic</string>
+    <string name="app_name">CardioCam</string>
     <string name="intro_message">
         <![CDATA[
-        
-            
-            This application allows the user to amplify a certain temporal frequency band (pixel-wise).
+            This application allows the user to amplify a certain temporal frequency band.
+            By Sam Carey. Georgia Tech, ECE-6258, Fall 2015.
             Based on MIT video magnification project.
-            
-        
         ]]>
     </string>
 </resources>

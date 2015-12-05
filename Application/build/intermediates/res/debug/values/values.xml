@@ -239,18 +239,18 @@
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/strings.xml -->
     <eat-comment/>
-    <string name="alpha">1.0</string>
+    <string name="alpha">10.0</string>
     <string name="alphaLabel">amplification</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/base-strings.xml -->
     <eat-comment/>
-    <string name="app_name">Camera2Basic</string>
+    <string name="app_name">CardioCam</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/strings.xml -->
     <eat-comment/>
-    <string name="bandwidth">10</string>
+    <string name="bandwidth">5.0</string>
     <string name="bandwidthLabel">bandwidth</string>
-    <string name="bpm">75 BPM</string>
+    <string name="bpm">Loops, FPS</string>
     <string name="camera_error">This device doesn\'t support Camera2 API.</string>
-    <string name="centerFreq">75</string>
+    <string name="centerFreq">75.0</string>
     <string name="centerFreqLabel">centerFreq</string>
     <string name="chromaAtten">1.0</string>
     <string name="chromaAttenLabel">colorFactor</string>
@@ -260,12 +260,9 @@
     <eat-comment/>
     <string name="intro_message">
         <![CDATA[
-        
-            
-            This application allows the user to amplify a certain temporal frequency band (pixel-wise).
+            This application allows the user to amplify a certain temporal frequency band.
+            By Sam Carey. Georgia Tech, ECE-6258, Fall 2015.
             Based on MIT video magnification project.
-            
-        
         ]]>
     </string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/strings.xml -->
@@ -280,8 +277,6 @@
     <string name="status_bar_notification_info_overflow">999+</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/strings.xml -->
     <eat-comment/>
-    <string name="stop">Stop</string>
-    <string name="track">Track</string>
     <string name="unit">bpm</string>
     <string name="unitLabel">units</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.0/res/values/values.xml -->
