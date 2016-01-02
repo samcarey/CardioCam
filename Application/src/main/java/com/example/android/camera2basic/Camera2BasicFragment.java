@@ -223,7 +223,7 @@ public class Camera2BasicFragment extends Fragment
      */
     private File mFile;
 
-    //Sam Carey
+    //Sam Carey //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //Declare objects
     TextView mDataView;         //Display loop counter and calculated frame rate
     String displayText;         //Content of mDataView
@@ -238,14 +238,14 @@ public class Camera2BasicFragment extends Fragment
     int mCameraNum;             //Number of camera currently being used (front or back)
     ToggleButton unit;          //Unit for frequencies being entered on front panel (beats per minute or Hz)
     ToggleButton overlay;       //Whether or not the live preview should be overlayed on the filtered result
-
+    int counter = 0;
     /*
     //prints message to log screen while plugged attached ADB
     public void print(String string){
         Log.i(getActivity().toString(), "Debug856: " + string);
     }
     */
-
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     /**
      * This a callback object for the {@link ImageReader}. "onImageAvailable" will be called when a
@@ -257,8 +257,10 @@ public class Camera2BasicFragment extends Fragment
         @Override
         public void onImageAvailable(ImageReader reader) {
 
-            //Sam Carey
+            //Sam Carey //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             Image image = reader.acquireLatestImage();  //Grab the newest image in the buffer, discarding older ones.
+            counter++;
+            if (counter == 60) startTracking();
             if (image != null) {
                 ccProc.addImage(image);                         //Add image to the algorithm
                 bm = ccProc.getBitmap();                        //Get whatever the algorithm produces
@@ -276,7 +278,7 @@ public class Camera2BasicFragment extends Fragment
                 });
                 image.close();
             }
-
+            //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         }
 
     };
@@ -436,18 +438,19 @@ public class Camera2BasicFragment extends Fragment
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-        //Sam Carey
+        //Sam Carey //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         initializeOptions(view);    //setup UI inputs
         view.findViewById(R.id.switchCamera).setOnClickListener(this);  //listen for the user wanting to switch cameras
         mDataView = (TextView) view.findViewById(R.id.dataView);        //link UI objects to internal objects
         mImageView = (ImageView) view.findViewById(R.id.imageView);     //link UI objects to internal objects
         mCameraNum = 1;                                                 //begin with the front-facing camera
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         view.findViewById(R.id.info).setOnClickListener(this);
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.previewFrame);
     }
 
-    //Sam Carey
+    //Sam Carey //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //setup UI inputs
     private void initializeOptions(View view){
         //link UI objects to internal objects
@@ -531,8 +534,10 @@ public class Camera2BasicFragment extends Fragment
             }
         });
     }
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    //Sam Carey
+
+    //Sam Carey //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //Make sure the input is a double, else return -1, indicated it's not
     private double parseString(String string){
         try {
@@ -541,6 +546,7 @@ public class Camera2BasicFragment extends Fragment
             return -1;
         }
     }
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -734,14 +740,14 @@ public class Camera2BasicFragment extends Fragment
             mPreviewRequestBuilder
                     = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
 
-            //Sam Carey
+            //Sam Carey //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             mPreviewRequestBuilder.addTarget(mImageReader.getSurface()); // direct preview frames to where they'll be processed
             if (mCameraNum == 1){   //check which camera is being used, for orientation purposes
                 ccProc = new CardioCamProcessor(mPreviewSize.getWidth(), mPreviewSize.getHeight(),true);
             }else{
                 ccProc = new CardioCamProcessor(mPreviewSize.getWidth(), mPreviewSize.getHeight(),false);
             }
-
+            //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
             // Here, we create a CameraCaptureSession for camera preview.
             mCameraDevice.createCaptureSession(Arrays.asList(surface, mImageReader.getSurface()),
@@ -921,10 +927,10 @@ public class Camera2BasicFragment extends Fragment
         }
     }
 
-    //Sam Carey
+    //Sam Carey //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //ran out of time on this feature
     //I was going to turn off lighting adjustment "intellegently"
-    /*
+
     private void turnOffAE(){
         try {
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_OFF);
@@ -943,7 +949,7 @@ public class Camera2BasicFragment extends Fragment
         lockFocus();
         turnOffAE();
     }
-    */
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     @Override
     public void onClick(View view) {
@@ -958,7 +964,7 @@ public class Camera2BasicFragment extends Fragment
                 }
                 break;
             }
-            //Sam Carey
+            //Sam Carey //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             //Switch which camera we are using
             case R.id.switchCamera: {
                 Activity activity = getActivity();
@@ -971,9 +977,11 @@ public class Camera2BasicFragment extends Fragment
                     //restart a bunch of stuff (including algorithm) with new camera
                     closeCamera();
                     openCamera(mTextureView.getWidth(), mTextureView.getHeight());
+                    counter = 0;
                 }
                 break;
             }
+            //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         }
     }
 

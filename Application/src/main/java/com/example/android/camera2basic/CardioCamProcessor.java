@@ -287,7 +287,7 @@ public class CardioCamProcessor {
     Bitmap tempBm;          //bitmap of dispRGB
     Mat tempYuv;            //fresh image which is color sampled at 4:2:0
     Mat tempRgb;            //full color-sampled rgb image from tempYuv. used as background in overlay mode.
-    int gBlurLevels = 5;    //number of times that the input image should be gaussian blurred and downsampled before processing
+    int gBlurLevels = 5;    //number of times that t he input image should be gaussian blurred and downsampled before processing
     ArrayList<Mat> blurLevels = new ArrayList<>();  //as the images are downsampled recursively, they will fit into these pyramid levels
 
     //intermediate step for unpacking yuv image from camera
@@ -323,8 +323,8 @@ public class CardioCamProcessor {
     List<Mat> channels = new ArrayList<>(); //intermediate step for splitting color channels
     int count = 0;                          // number of buffers processed
     Boolean filteredReady = false;          // until the first buffer is processed, don't try to show results
-    double beatsPerMinuteL = 70;            // lower end of bandpass filter in beats per minute
-    double beatsPerMinuteU = 80;            // upper end of bandpass filter in beats per minute
+    double beatsPerMinuteL = 80;            // lower end of bandpass filter in beats per minute
+    double beatsPerMinuteU = 90;            // upper end of bandpass filter in beats per minute
     double lowerFreq = beatsPerMinuteL/60; //bpm to bps
     double upperFreq = beatsPerMinuteU/60;
     double centerFreqBpm = (beatsPerMinuteL+beatsPerMinuteU)/2; //These are selected on front panel
@@ -333,7 +333,7 @@ public class CardioCamProcessor {
 
     Mat zeros;   //entire row of zeros for nulling certain luminance frequencies
     Mat halves;  //entire row for nulling certain color frequencies (zero is in the middle of the range of possible values for color)
-    double alpha = 10;      //bandpass amplification factor
+    double alpha = 50;      //bandpass amplification factor
     double chromAtten = 1;  //ratio of color amplification to overall amplification
     Scalar luminAlpha = new Scalar(alpha,alpha);
     Scalar chromAlpha = new Scalar(alpha*chromAtten,alpha*chromAtten);

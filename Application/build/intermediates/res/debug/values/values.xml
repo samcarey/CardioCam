@@ -239,18 +239,18 @@
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/strings.xml -->
     <eat-comment/>
-    <string name="alpha">10.0</string>
+    <string name="alpha">50</string>
     <string name="alphaLabel">amplification</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/base-strings.xml -->
     <eat-comment/>
     <string name="app_name">CardioCam</string>
     <!-- From: file:/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/src/main/res/values/strings.xml -->
     <eat-comment/>
-    <string name="bandwidth">5.0</string>
+    <string name="bandwidth">10</string>
     <string name="bandwidthLabel">bandwidth</string>
     <string name="bpm">Loops, FPS</string>
     <string name="camera_error">This device doesn\'t support Camera2 API.</string>
-    <string name="centerFreq">75.0</string>
+    <string name="centerFreq">85</string>
     <string name="centerFreqLabel">centerFreq</string>
     <string name="chromaAtten">1.0</string>
     <string name="chromaAttenLabel">colorFactor</string>
