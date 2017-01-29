@@ -2,130 +2,310 @@
 <items version="2" >
 
     <item
-        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/jars/classes.jar"
+        is-multidex="false"
+        jar="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.1.0/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.1"
-        sha1="8413c27b45b7fe61dca4a98159f65e2cee215f5a">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-692ae75da377c36cb811a4d3b2277526aec07aaa.jar" />
+        optimize="true"
+        revision="25.0.2"
+        sha1="0a0ef86b7fa568a52bf6214a0326ca1f1d618da7">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/com.android.support-support-core-utils-25.1.0_b8f4a7e4ad82ab425b60293e2ad23070336e7aa2.jar" />
     </item>
     <item
+        is-multidex="false"
         jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/videoinput/0.200-1.0/f61bec20a8eee696f45aba7cedeb66c819f57491/videoinput-0.200-1.0.jar"
         jumboMode="false"
+        optimize="true"
         revision="23.0.1"
         sha1="f61bec20a8eee696f45aba7cedeb66c819f57491">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/videoinput-0.200-1.0-0ff5221caff0e503473085ee54f9fff13d2a0d7d.jar" />
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/videoinput-0.200-1.0_0ff5221caff0e503473085ee54f9fff13d2a0d7d.jar" />
     </item>
     <item
-        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/flycapture/2.7.3.19-1.0/a8aec13c5ff93cfb5f4848916acf7cf4e926509b/flycapture-2.7.3.19-1.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="a8aec13c5ff93cfb5f4848916acf7cf4e926509b">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/flycapture-2.7.3.19-1.0-09bf6de36d13a8fd83e751e308ab155c88baceb6.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/ffmpeg/2.7.1-1.0/64738c7c3de51e60dcd2426bf8f774c0f1d9a8b6/ffmpeg-2.7.1-1.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="64738c7c3de51e60dcd2426bf8f774c0f1d9a8b6">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/ffmpeg-2.7.1-1.0-5f862e16b32e0c8a50f48db500d6da2d71dcb52c.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="4fcf0b1879f8caf497c073e1432d398e9e2988c1">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-27e3d3c1f8d422f665bd2b820f57da230b6925e9.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/opencv/3.0.0-1.0/96b9521df0d812f431a25edbdc4d5316c1b1e00/opencv-3.0.0-1.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="096b9521df0d812f431a25edbdc4d5316c1b1e00">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/opencv-3.0.0-1.0-f910c9644beab0f445d2ff931c880f2224c9081b.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/Camera2Basic.libraries/opencv/unspecified/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="9702fe6c5219579bcbb4ca1fdd37490cf772b267">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-eca31bc8cd1c56257a38675f5fab9e51d5aae2bd.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/libdc1394/2.2.3-1.0/ab4fb3621c29f8f8752624373837f1c32a6f5097/libdc1394-2.2.3-1.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ab4fb3621c29f8f8752624373837f1c32a6f5097">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/libdc1394-2.2.3-1.0-83c606f92a17beeec2f29d0da8d5a325f601586c.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.0/support-annotations-23.0.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="990e7f98a7bad86a40b1f0bcfeb039023afd0839">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/support-annotations-23.0.0-2440b6ea3b1a53ca6e85ffba6a654440db888664.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/libfreenect/0.5.2-1.0/f0206735d3a4a44e4df4dc2f4006d638a9c15a01/libfreenect-0.5.2-1.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="f0206735d3a4a44e4df4dc2f4006d638a9c15a01">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/libfreenect-0.5.2-1.0-72d0866cce45fa551b214ab65e00a32bb351ea43.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco/javacv/1.0/34aecdc27d00c73294eef65e9f078d8db35ef1/javacv-1.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="0034aecdc27d00c73294eef65e9f078d8db35ef1">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/javacv-1.0-89bbd4987fbe56433d23a738b0db5f48ee050d5d.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.0.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="1ccbc26be2c465c622a48310e8092241b01abe80">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-4ea4c876619ca5c61ec2aef933920cb3f6afc04e.jar" />
-    </item>
-    <item
-        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/support-v13/23.0.0/jars/libs/internal_impl-23.0.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="5d4bccb885c8a89d066ecb6c4addb553a99a79a2">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/internal_impl-23.0.0-4a640bc2a1ae7f56af614dbd4ff703f7ba2672bf.jar" />
-    </item>
-    <item
+        is-multidex="false"
         jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco/javacpp/1.0/3bb28b42811adc255ce5ce56338f7c1c002c0a17/javacpp-1.0.jar"
         jumboMode="false"
+        optimize="true"
         revision="23.0.1"
         sha1="3bb28b42811adc255ce5ce56338f7c1c002c0a17">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/javacpp-1.0-3fa6b15449726c9e2bd637500cc7af053f1059e7.jar" />
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/javacpp-1.0_3fa6b15449726c9e2bd637500cc7af053f1059e7.jar" />
     </item>
     <item
-        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/support-v13/23.0.0/jars/classes.jar"
+        is-multidex="false"
+        jar="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/exploded-aar/com.android.support/support-v4/25.1.0/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.1"
-        sha1="bb0ac3f3ee2d71854501cc28e52cc84a20209b41">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/classes-b46a9951dd0304efd4d7d73de67a24cc21423b69.jar" />
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/com.android.support-support-v4-25.1.0_34428f0d2e8a2fb5c1394b254ef7882c8fc4819d.jar" />
     </item>
     <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/libdc1394/2.2.3-1.0/ab4fb3621c29f8f8752624373837f1c32a6f5097/libdc1394-2.2.3-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="ab4fb3621c29f8f8752624373837f1c32a6f5097">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/libdc1394-2.2.3-1.0_83c606f92a17beeec2f29d0da8d5a325f601586c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="1630658fbc2d222b988603c27b4a4249586fbfe7">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-25.1.0_f2d611e7d4c92f1946bfd06782462fb63d428903.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/artoolkitplus/2.3.1-1.0/e96d21b58baa6c17eaadf6a8e9bd89493ad8cb5/artoolkitplus-2.3.1-1.0.jar"
         jumboMode="false"
+        optimize="true"
         revision="23.0.1"
         sha1="0e96d21b58baa6c17eaadf6a8e9bd89493ad8cb5">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/artoolkitplus-2.3.1-1.0-c9cf6015aa80a9bfebaf224ef98eb43bdd56e31c.jar" />
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/artoolkitplus-2.3.1-1.0_c9cf6015aa80a9bfebaf224ef98eb43bdd56e31c.jar" />
     </item>
     <item
-        jar="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/jars/libs/internal_impl-23.0.0.jar"
+        is-multidex="false"
+        jar="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/exploded-aar/com.android.support/support-v13/25.1.0/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.1"
-        sha1="8bd336eeae661e8311330284897ee07f8ebaa297">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/internal_impl-23.0.0-6050a2367b40ea3f32b79476f6258089dae1bc2f.jar" />
+        optimize="true"
+        revision="25.0.2"
+        sha1="e006c9b6f0aaed9d8c7934b74039738390fe3468">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/com.android.support-support-v13-25.1.0_9953cf4d7154b25bc0af2c4087bdf9ee3bf0b841.jar" />
     </item>
     <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/libfreenect/0.5.2-1.0/f0206735d3a4a44e4df4dc2f4006d638a9c15a01/libfreenect-0.5.2-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="f0206735d3a4a44e4df4dc2f4006d638a9c15a01">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/libfreenect-0.5.2-1.0_72d0866cce45fa551b214ab65e00a32bb351ea43.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.1.0/support-annotations-25.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="64cb6b229a8bdfd907bc8dd46839a0053e4c018d">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/support-annotations-25.1.0_91865a96a12c4dac9b17143298a550193a8b661e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/libfreenect/0.5.2-1.0/f0206735d3a4a44e4df4dc2f4006d638a9c15a01/libfreenect-0.5.2-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f0206735d3a4a44e4df4dc2f4006d638a9c15a01">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/libfreenect-0.5.2-1.0_72d0866cce45fa551b214ab65e00a32bb351ea43.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/opencv/3.0.0-1.0/96b9521df0d812f431a25edbdc4d5316c1b1e00/opencv-3.0.0-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="096b9521df0d812f431a25edbdc4d5316c1b1e00">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/opencv-3.0.0-1.0_f910c9644beab0f445d2ff931c880f2224c9081b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6fb6ac3e8d3b9013819920d9ea11f3803c4c0033">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-25.1.0_9087065f2499655b22057b8d22d22c743be212db.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/exploded-aar/CardioCam.libraries/opencv/unspecified/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="5824bd547435b16ed34611064379094a8efdd47e">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/CardioCam.libraries-opencv-unspecified_dd01cca4cb3248af3aaba864c7577a24b5a12c76.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/ffmpeg/2.7.1-1.0/64738c7c3de51e60dcd2426bf8f774c0f1d9a8b6/ffmpeg-2.7.1-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="64738c7c3de51e60dcd2426bf8f774c0f1d9a8b6">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/ffmpeg-2.7.1-1.0_5f862e16b32e0c8a50f48db500d6da2d71dcb52c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/videoinput/0.200-1.0/f61bec20a8eee696f45aba7cedeb66c819f57491/videoinput-0.200-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f61bec20a8eee696f45aba7cedeb66c819f57491">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/videoinput-0.200-1.0_0ff5221caff0e503473085ee54f9fff13d2a0d7d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco/javacv/1.0/34aecdc27d00c73294eef65e9f078d8db35ef1/javacv-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0034aecdc27d00c73294eef65e9f078d8db35ef1">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/javacv-1.0_89bbd4987fbe56433d23a738b0db5f48ee050d5d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/ffmpeg/2.7.1-1.0/64738c7c3de51e60dcd2426bf8f774c0f1d9a8b6/ffmpeg-2.7.1-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="64738c7c3de51e60dcd2426bf8f774c0f1d9a8b6">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/ffmpeg-2.7.1-1.0_5f862e16b32e0c8a50f48db500d6da2d71dcb52c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/flycapture/2.7.3.19-1.0/a8aec13c5ff93cfb5f4848916acf7cf4e926509b/flycapture-2.7.3.19-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a8aec13c5ff93cfb5f4848916acf7cf4e926509b">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/flycapture-2.7.3.19-1.0_09bf6de36d13a8fd83e751e308ab155c88baceb6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/artoolkitplus/2.3.1-1.0/e96d21b58baa6c17eaadf6a8e9bd89493ad8cb5/artoolkitplus-2.3.1-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0e96d21b58baa6c17eaadf6a8e9bd89493ad8cb5">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/artoolkitplus-2.3.1-1.0_c9cf6015aa80a9bfebaf224ef98eb43bdd56e31c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/exploded-aar/com.android.support/support-compat/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ca3c7aa31e2726a400a6e552b93cb9f63c9a1e6d">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/com.android.support-support-compat-25.1.0_378797c31fea8ad5292eef87451286938c39c8cd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/opencv/3.0.0-1.0/96b9521df0d812f431a25edbdc4d5316c1b1e00/opencv-3.0.0-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="096b9521df0d812f431a25edbdc4d5316c1b1e00">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/opencv-3.0.0-1.0_f910c9644beab0f445d2ff931c880f2224c9081b.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/flandmark/1.07-1.0/700d52c21b96b0a0d2f27e198d2e9e8a8adc5a81/flandmark-1.07-1.0.jar"
         jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="700d52c21b96b0a0d2f27e198d2e9e8a8adc5a81">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/flandmark-1.07-1.0_8ff309924af66cea026ae54b597cafd2eaadd7a3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco/javacpp/1.0/3bb28b42811adc255ce5ce56338f7c1c002c0a17/javacpp-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3bb28b42811adc255ce5ce56338f7c1c002c0a17">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/javacpp-1.0_3fa6b15449726c9e2bd637500cc7af053f1059e7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/flandmark/1.07-1.0/700d52c21b96b0a0d2f27e198d2e9e8a8adc5a81/flandmark-1.07-1.0.jar"
+        jumboMode="false"
+        optimize="true"
         revision="23.0.1"
         sha1="700d52c21b96b0a0d2f27e198d2e9e8a8adc5a81">
-        <dex dex="/Users/samcarey/AndroidStudioProjects/Camera2Basic/Application/build/intermediates/pre-dexed/debug/flandmark-1.07-1.0-8ff309924af66cea026ae54b597cafd2eaadd7a3.jar" />
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/flandmark-1.07-1.0_8ff309924af66cea026ae54b597cafd2eaadd7a3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f02263e35e52668dd17b73bf961437e3d562b35f">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-25.1.0_1b468383120b87896204c0f8918d4cd47a423010.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e79aa3d9a16f8c9f16377c0608de70a8f31e5d80">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-25.1.0_7a41ce436f4a35bca936f4859fa60679aa66553a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco/javacv/1.0/34aecdc27d00c73294eef65e9f078d8db35ef1/javacv-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="0034aecdc27d00c73294eef65e9f078d8db35ef1">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/javacv-1.0_89bbd4987fbe56433d23a738b0db5f48ee050d5d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="aee64634871d88a419d59eb743c1258a60f19700">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-25.1.0_8a558570c8dc1da1c9bd45b7b69ddd42710a8580.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/libdc1394/2.2.3-1.0/ab4fb3621c29f8f8752624373837f1c32a6f5097/libdc1394-2.2.3-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ab4fb3621c29f8f8752624373837f1c32a6f5097">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/libdc1394-2.2.3-1.0_83c606f92a17beeec2f29d0da8d5a325f601586c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/.gradle/caches/modules-2/files-2.1/org.bytedeco.javacpp-presets/flycapture/2.7.3.19-1.0/a8aec13c5ff93cfb5f4848916acf7cf4e926509b/flycapture-2.7.3.19-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="a8aec13c5ff93cfb5f4848916acf7cf4e926509b">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/flycapture-2.7.3.19-1.0_09bf6de36d13a8fd83e751e308ab155c88baceb6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/exploded-aar/com.android.support/support-fragment/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="2a53c4f3518116b8c6aee0e477233f0f7da8616f">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/com.android.support-support-fragment-25.1.0_2438579eabe103dba7e321e4f6c0d84cb7e2b086.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/exploded-aar/CardioCam.libraries/opencv/unspecified/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="76ce7eaf414039d4043b77f590ce0c631cd46e11">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/CardioCam.libraries-opencv-unspecified_dd01cca4cb3248af3aaba864c7577a24b5a12c76.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/exploded-aar/com.android.support/cardview-v7/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="7f2420506110902f033406b25697cf97ee8c38b2">
+        <dex dex="/Users/samcarey/Engineering/AndroidStudioProjects/CardioCam/Application/build/intermediates/pre-dexed/debug/com.android.support-cardview-v7-25.1.0_7d2ac22c1ef02033134d7448624fa549e68f8f27.jar" />
     </item>
 
 </items>
